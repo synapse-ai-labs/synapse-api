@@ -7,3 +7,21 @@ export const Task = {
 	completed: Boolean,
 	due_date: new DateTime(),
 };
+
+export enum Distance {
+	Dot = "Dot",
+	Cosine = "Cosine",
+	Euclid = "Euclid",
+	Manhattan = "Manhattan"
+};
+
+export const Namespace = {
+	name: new Str({ example: "my_vector_store"}),
+	dimensionality: Number,
+	distance: Distance,
+	shardNumber: Number,
+	replicationFactor: Number,
+	writeConsistencyFactor: Number,
+	vectorsCount: Number,
+	pointsCount: Number
+};

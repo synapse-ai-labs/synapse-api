@@ -3,11 +3,14 @@ import { TaskCreate } from "./endpoints/taskCreate";
 import { TaskDelete } from "./endpoints/taskDelete";
 import { TaskFetch } from "./endpoints/taskFetch";
 import { TaskList } from "./endpoints/taskList";
+import { NamespaceList } from "./endpoints/namespaceList";
 
 export const router = OpenAPIRouter({
 	docs_url: "/",
 });
 
+
+router.get("/api/namespaces", NamespaceList);
 router.get("/api/tasks/", TaskList);
 router.post("/api/tasks/", TaskCreate);
 router.get("/api/tasks/:taskSlug/", TaskFetch);
