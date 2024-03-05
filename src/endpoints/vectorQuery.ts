@@ -56,7 +56,6 @@ export class VectorQuery extends OpenAPIRoute {
             });
         }
         const namespaceResult = results[0];
-        console.log({namespaceResult});
         
         const openai = new OpenAI({
             apiKey: env.OPENAI_API_KEY
@@ -69,7 +68,6 @@ export class VectorQuery extends OpenAPIRoute {
 					dimensions: env.EMBEDDING_DIMENSIONALITY  // TODO: Might be possible to provide the developer with more granular control 
 				}
 			);
-            console.log({embeddingData});
             const queryOpts = {
                 namespace
             };
@@ -77,19 +75,16 @@ export class VectorQuery extends OpenAPIRoute {
                 embeddingData[0].embedding,
                 queryOpts
             );
-            console.log({vectorizeQueryResult});
 			const embeddingsQuery = `SELECT * FROM embeddings WHERE namespace = '${namespace}' AND vector_id IN (${vectorizeQueryResult.matches.map(o => `'${o.id}'`).join(',')})`;
-			console.log({embeddingsQuery});
-			const { results: embeddingsResult } = await env.DB.prepare(
+			const { results } = await env.DB.prepare(
 				embeddingsQuery
 			).all();
-			console.log({embeddingsResult});
 			return {
 				success: true,
 				matches: vectorizeQueryResult.matches.map((o, i) => ({
 					id: o.id,
 					score: o.score,
-					source: embeddingsResult.find(e => e.vector_id === o.id).source,
+					source: results.find(e => e.vector_id === o.id).source,
 					metadata: o.metadata
 				}))
 			}
