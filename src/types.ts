@@ -27,7 +27,7 @@ export const Namespace = {
 
 
 export const VectorBody = {
-	id: new Str({ required: false}),
+	id: new Str({ required: false }),
 	text: String,
 	metadata: new Str({ required: false}),
 };

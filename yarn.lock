@@ -9,6 +9,11 @@
   dependencies:
     openapi3-ts "^4.1.2"
 
+"@cfworker/uuid@^1.12.4":
+  version "1.12.4"
+  resolved "https://registry.yarnpkg.com/@cfworker/uuid/-/uuid-1.12.4.tgz#178a2126ce91bfd2fb58c1a14c991502bb69e8ef"
+  integrity sha512-aw4lxCT4NLbGqlTScWPtPrZrg4TO6HCZCnNUAeC4yTOvkXjJGdJP6S5NCY9vtP2FruLIC+vYCvUP98fHXtF7kg==
+
 "@cloudflare/ai@^1.0.53":
   version "1.0.53"
   resolved "https://registry.npmjs.org/@cloudflare/ai/-/ai-1.0.53.tgz"

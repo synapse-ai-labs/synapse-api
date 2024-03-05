@@ -7,6 +7,7 @@ import {
 } from "@cloudflare/itty-router-openapi";
 import { MultiVectorBody, Vector, VectorBody } from "../types";
 import { Env } from 'index';
+import { uuid } from '@cfworker/uuid';
 
 export class VectorCreate extends OpenAPIRoute {
 	static schema: OpenAPIRouteSchema = {
@@ -42,6 +43,7 @@ export class VectorCreate extends OpenAPIRoute {
 		const parsedData = vectorsToCreate.vectors.map(o => {
 			return {
 				...o,
+				id: o.id ?? uuid(), 
 				metadata: o.metadata ? JSON.parse(o.metadata) : {},
 			}
 		});
@@ -57,7 +59,7 @@ export class VectorCreate extends OpenAPIRoute {
                 dimensions: 1024
             }
         );
-		// need to map ids to indexes
+		// map ids to positional indexes
 		const mapped = parsedData.reduce((acc, { id }, idx) => {
 			acc[id] = idx;
 			return acc;
@@ -69,11 +71,23 @@ export class VectorCreate extends OpenAPIRoute {
 			namespace,
 			metadata: parsedData[i].metadata,
 		}));
-		const insertedVectors = await env.VECTORIZE_INDEX.insert(insertionData);
+		const insertionSql = `
+            INSERT INTO embeddings (source, namespace, vector_id) 
+            VALUES (?, ?, ?) 
+            ON CONFLICT (vector_id) DO UPDATE SET source = EXCLUDED.source;
+        `;
+		const d1Inserts = insertionData.map((o, i) => {
+			return env.DB.prepare(insertionSql).bind(
+				parsedData[i].text,
+				namespace,
+				parsedData[i].id
+			)
+		});
+		const [_, vectorizeResult] = await Promise.all([env.DB.batch(d1Inserts), env.VECTORIZE_INDEX.insert(insertionData)]);
 		return {
 			success: true,
-			vectors: insertedVectors.ids.map(id => ({
-				id,
+			vectors: vectorizeResult.ids.map((id, i) => ({
+				id: id,
 				source: parsedData.find(o => o.id === id).text,
 				values: embeddingData[mapped[id]].embedding,
 				metadata: parsedData[mapped[id]].metadata
