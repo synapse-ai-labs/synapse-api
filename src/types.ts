@@ -1,5 +1,6 @@
 import { DateTime, Str } from "@cloudflare/itty-router-openapi";
 
+
 export const Task = {
 	name: new Str({ example: "lorem" }),
 	slug: String,
@@ -24,10 +25,22 @@ export const Namespace = {
 	vectorsCount: Number
 };
 
+export const VectorBody = {
+	id: new Str({ required: false}),
+	text: String,
+	metadata: {},
+};
+
+export const MultiVectorBody = {
+	vectors: [VectorBody]
+}; 
+
 export const Vector = {
 	id: String,
-	source: String
-}
+	source: String,
+	metadata: {},
+	values: [Number],
+};
 
 export declare type VectorIndexConfigOverride = {
 	dimensions: number;

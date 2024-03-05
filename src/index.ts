@@ -5,10 +5,11 @@ import { TaskFetch } from "./endpoints/taskFetch";
 import { TaskList } from "./endpoints/taskList";
 import { NamespaceDescribe } from "./endpoints/namespaceDescribe";
 import { VectorsList } from "./endpoints/vectorList";
+import { VectorCreate } from "./endpoints/vectorCreate";
 
 export interface Env {
 	VECTORIZE_INDEX: VectorizeIndex;
-	OPENAI_API_KEY: String;
+	OPENAI_API_KEY: string;
 	DB: D1Database;
 }
 
@@ -24,6 +25,7 @@ export const router = OpenAPIRouter({
 
 router.get("/api/namespace", NamespaceDescribe);
 router.get("/api/vectors", VectorsList);
+router.post("/api/vectors/:namespace/", VectorCreate);
 router.get("/api/tasks/", TaskList);
 router.post("/api/tasks/", TaskCreate);
 router.get("/api/tasks/:taskSlug/", TaskFetch);
