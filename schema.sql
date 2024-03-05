@@ -9,6 +9,5 @@ CREATE TABLE IF NOT EXISTS embeddings (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     source TEXT NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    namespace_id INTEGER NOT NULL,
-    CONSTRAINT fk_namespaces_embeddings FOREIGN KEY (namespace_id) REFERENCES namespaces (id)
+    namespace TEXT NOT NULL
 );
