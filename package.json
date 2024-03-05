@@ -8,6 +8,7 @@
 		"start": "wrangler dev"
 	},
 	"dependencies": {
+		"@cloudflare/ai": "^1.0.53",
 		"@cloudflare/itty-router-openapi": "^1.0.1",
 		"@qdrant/js-client-rest": "^1.7.0",
 		"openai": "^4.28.4"

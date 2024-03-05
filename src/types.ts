@@ -16,12 +16,20 @@ export enum Distance {
 };
 
 export const Namespace = {
-	name: new Str({ example: "my_vector_store"}),
+	id: String,
+	name: new Str({ example: "embeddings"}),
+	description: String,
 	dimensionality: Number,
 	distance: Distance,
-	shardNumber: Number,
-	replicationFactor: Number,
-	writeConsistencyFactor: Number,
-	vectorsCount: Number,
-	pointsCount: Number
+	vectorsCount: Number
+};
+
+export const Vector = {
+	id: String,
+	source: String
+}
+
+export declare type VectorIndexConfigOverride = {
+	dimensions: number;
+	metric: VectorizeDistanceMetric;
 };
