@@ -5,7 +5,7 @@ import {
 	OpenAPIRouteSchema,
 	Path,
 } from "@cloudflare/itty-router-openapi";
-import { MultiVectorBody, Vector, VectorBody } from "../types";
+import { MultiVectorBody, Vector } from "../types";
 import { Env } from 'index';
 import { uuid } from '@cfworker/uuid';
 
