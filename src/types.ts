@@ -33,7 +33,8 @@ export const VectorBody = {
 };
 
 export const MultiVectorBody = {
-	vectors: [VectorBody]
+	vectors: [VectorBody],
+	model: new Str({ required: false })
 }; 
 
 export const Vector = {

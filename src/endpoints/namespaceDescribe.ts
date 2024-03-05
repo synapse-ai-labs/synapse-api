@@ -6,7 +6,7 @@ import {
 } from "@cloudflare/itty-router-openapi";
 import { Namespace, VectorIndexConfigOverride } from "../types";
 
-import { Env } from "index";
+import { Env } from "env";
 
 export class NamespaceDescribe extends OpenAPIRoute {
 	static schema: OpenAPIRouteSchema = {

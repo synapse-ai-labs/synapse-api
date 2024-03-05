@@ -7,12 +7,6 @@ import { NamespaceDescribe } from "./endpoints/namespaceDescribe";
 import { VectorsList } from "./endpoints/vectorList";
 import { VectorCreate } from "./endpoints/vectorCreate";
 
-export interface Env {
-	VECTORIZE_INDEX: VectorizeIndex;
-	OPENAI_API_KEY: string;
-	DB: D1Database;
-}
-
 export interface EmbeddingResponse {
 	shape: number[];
 	data: number[][];

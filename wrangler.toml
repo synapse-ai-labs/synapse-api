@@ -10,3 +10,6 @@ index_name = "embeddings"
 binding = "DB"
 database_name = "index"
 database_id = "e190383f-3cb2-4097-bc67-f117f629aa37"
+
+[vars]
+EMBEDDING_DIMENSIONALITY = 1024

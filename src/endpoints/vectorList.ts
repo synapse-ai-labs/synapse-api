@@ -5,7 +5,7 @@ import {
 } from "@cloudflare/itty-router-openapi";
 import { Vector } from "../types";
 
-import { Env } from "index";
+import { Env } from "env";
 
 export class VectorsList extends OpenAPIRoute {
 	static schema: OpenAPIRouteSchema = {
