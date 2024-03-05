@@ -48,3 +48,14 @@ export declare type VectorIndexConfigOverride = {
 	dimensions: number;
 	metric: VectorizeDistanceMetric;
 };
+
+export const VectorQueryBody = {
+	inputs: String
+};
+
+export const VectorMatch = {
+	id: String,
+	source: String,
+	metadata: new Obj({ required: false }),
+	score: Number,
+}

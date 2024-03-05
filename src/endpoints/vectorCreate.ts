@@ -40,6 +40,21 @@ export class VectorCreate extends OpenAPIRoute {
 		},
 	};
 
+	async createNamespace(namespace: string, model: string, env: Env) {
+		const embeddingsInsertSql = `INSERT INTO namespaces (name, model) VALUES (?, ?) RETURNING *;`; 
+		const { results } = await env.DB.prepare(
+			embeddingsInsertSql
+		).bind(namespace, model).all();
+		return results;
+	};
+
+	async getNamespace(namespace: string, env: Env) {
+		const { results } = await env.DB.prepare(
+			`SELECT * FROM namespaces WHERE name = ?;`,
+		).bind(namespace).all();
+		return results;
+	}
+
 	async handle(
 		request: Request,
 		env: Env,
@@ -61,10 +76,26 @@ export class VectorCreate extends OpenAPIRoute {
         });
 		const model = vectorsToCreate.model ?? DEFAULT_OPENAI_EMBEDDING_MODEL;
 		try {
+			let namespaceResults = await this.getNamespace(
+				namespace,
+				env
+			);
+			if (namespaceResults.length === 0) {
+				namespaceResults = await this.createNamespace(namespace, model, env);
+			}
+			if (namespaceResults.length === 0) {
+				return Response.json({ 
+					error: `Failed to create a Cloudflare namespace in your D1 database` 
+				}, {
+					status: StatusCodes.BAD_REQUEST
+				});
+			}
+			const namespaceData = namespaceResults[0];
+
 			const { data: embeddingData } = await openai.embeddings.create(
 				{
 					input: parsedData.map(o => o.text),
-					model: vectorsToCreate.model ?? DEFAULT_OPENAI_EMBEDDING_MODEL,
+					model: namespaceData.model as string,
 					dimensions: env.EMBEDDING_DIMENSIONALITY
 				}
 			);
@@ -80,11 +111,7 @@ export class VectorCreate extends OpenAPIRoute {
 				namespace,
 				metadata: parsedData[i].metadata,
 			}));
-			const insertionSql = `
-				INSERT INTO embeddings (source, namespace, vector_id) 
-				VALUES (?, ?, ?) 
-				ON CONFLICT (vector_id) DO UPDATE SET source = EXCLUDED.source;
-			`;
+			const insertionSql = `INSERT INTO embeddings (source, namespace, vector_id) VALUES (?, ?, ?) ON CONFLICT (vector_id) DO UPDATE SET source = EXCLUDED.source;`;
 			const d1Inserts = insertionData.map((o, i) => {
 				return env.DB.prepare(insertionSql).bind(
 					parsedData[i].text,
@@ -104,6 +131,7 @@ export class VectorCreate extends OpenAPIRoute {
 				})),
 			};
 		} catch (err) {
+			console.log({errorOccurred: err});
 			if (err instanceof OpenAINotFoundError) {
 				return Response.json({ error: `OpenAI model '${model}' not found` }, { status: StatusCodes.BAD_REQUEST });
 			}
