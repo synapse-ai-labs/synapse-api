@@ -1,4 +1,4 @@
-import { DateTime, Str } from "@cloudflare/itty-router-openapi";
+import { DateTime, Obj, Str } from "@cloudflare/itty-router-openapi";
 
 
 export const Task = {
@@ -25,10 +25,11 @@ export const Namespace = {
 	vectorsCount: Number
 };
 
+
 export const VectorBody = {
 	id: new Str({ required: false}),
 	text: String,
-	metadata: {},
+	metadata: new Str({ required: false}),
 };
 
 export const MultiVectorBody = {
@@ -38,7 +39,7 @@ export const MultiVectorBody = {
 export const Vector = {
 	id: String,
 	source: String,
-	metadata: {},
+	metadata: Obj,
 	values: [Number],
 };
 

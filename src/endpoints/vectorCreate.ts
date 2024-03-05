@@ -1,10 +1,9 @@
 import OpenAI from 'openai';
 
-
 import {
 	OpenAPIRoute,
 	OpenAPIRouteSchema,
-	Path
+	Path,
 } from "@cloudflare/itty-router-openapi";
 import { MultiVectorBody, Vector, VectorBody } from "../types";
 import { Env } from 'index';
@@ -40,6 +39,12 @@ export class VectorCreate extends OpenAPIRoute {
 	) {
 		// Retrieve the validated request body
 		const vectorsToCreate = data.body;
+		const parsedData = vectorsToCreate.vectors.map(o => {
+			return {
+				...o,
+				metadata: o.metadata ? JSON.parse(o.metadata) : {},
+			}
+		});
 		const { namespace } = data.params;
 
         const openai = new OpenAI({
@@ -47,30 +52,31 @@ export class VectorCreate extends OpenAPIRoute {
         });
         const { data: embeddingData } = await openai.embeddings.create(
             {
-                input: vectorsToCreate.vectors.map(o => o.text),
+                input: parsedData.map(o => o.text),
                 model: 'text-embedding-3-large',
                 dimensions: 1024
             }
         );
 		// need to map ids to indexes
-		const mapped = vectorsToCreate.vectors.reduce((acc, { id }, idx) => {
+		const mapped = parsedData.reduce((acc, { id }, idx) => {
 			acc[id] = idx;
 			return acc;
 		}, {});
 
 		const insertionData: VectorizeVector[] = embeddingData.map((o, i) => ({
-			id: vectorsToCreate.vectors[i].id,
+			id: parsedData[i].id,
 			values: o.embedding,
 			namespace,
-			metadata: vectorsToCreate.vectors[i].metadata,
+			metadata: parsedData[i].metadata,
 		}));
 		const insertedVectors = await env.VECTORIZE_INDEX.insert(insertionData);
 		return {
 			success: true,
 			vectors: insertedVectors.ids.map(id => ({
 				id,
-				source: vectorsToCreate.vectors.find(o => o.id === id).text,
-				values: embeddingData[mapped[id]].embedding
+				source: parsedData.find(o => o.id === id).text,
+				values: embeddingData[mapped[id]].embedding,
+				metadata: parsedData[mapped[id]].metadata
 			})),
 		};
 	}
