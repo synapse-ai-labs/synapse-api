@@ -60,7 +60,6 @@ export class VectorCreate extends OpenAPIRoute {
             apiKey: env.OPENAI_API_KEY
         });
 		const model = vectorsToCreate.model ?? DEFAULT_OPENAI_EMBEDDING_MODEL;
-		console.log({embeddingDim: env.EMBEDDING_DIMENSIONALITY, model});
 		try {
 			const { data: embeddingData } = await openai.embeddings.create(
 				{
@@ -105,9 +104,7 @@ export class VectorCreate extends OpenAPIRoute {
 				})),
 			};
 		} catch (err) {
-			console.log({cfError: err});
 			if (err instanceof OpenAINotFoundError) {
-				console.log("not found error raised");
 				return Response.json({ error: `OpenAI model '${model}' not found` }, { status: StatusCodes.BAD_REQUEST });
 			}
 			const vectorInsertRegex = /^VECTOR_INSERT_ERROR \(code = (\d+)\)/;
