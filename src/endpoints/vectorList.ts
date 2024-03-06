@@ -14,7 +14,8 @@ export class VectorsList extends OpenAPIRoute {
         parameters: {
 			page: Query(Number, {
 				description: "Page number",
-				default: 0,
+				default: 1,
+				required: false
 			}),
 			limit: Query(Number, {
 				description: "Number of results to return per page",

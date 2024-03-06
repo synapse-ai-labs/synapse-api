@@ -8,6 +8,7 @@ import { VectorsList } from "./endpoints/vectorList";
 import { VectorCreate } from "./endpoints/vectorCreate";
 import { VectorQuery } from "./endpoints/vectorQuery";
 import { VectorFetch } from "./endpoints/vectorFetch";
+import { NamespaceList } from "./endpoints/namespaceList";
 
 export interface EmbeddingResponse {
 	shape: number[];
@@ -18,8 +19,9 @@ export const router = OpenAPIRouter({
 	docs_url: "/",
 });
 
-router.post("/api/namespace/:namespace/query", VectorQuery);
-router.get("/api/namespace/:namespace/", NamespaceFetch);
+router.post("/api/namespaces/:namespace/query", VectorQuery);
+router.get("/api/namespaces/", NamespaceList);
+router.get("/api/namespaces/:namespace/", NamespaceFetch);
 router.get("/api/vectors", VectorsList);
 router.post("/api/vectors/:namespace/", VectorCreate);
 router.get("/api/vectors/:namespace/:vectorId/", VectorFetch);

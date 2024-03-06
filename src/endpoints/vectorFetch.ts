@@ -10,10 +10,10 @@ import { Env } from "env";
 export class VectorFetch extends OpenAPIRoute {
 	static schema: OpenAPIRouteSchema = {
 		tags: ["Vectors"],
-		summary: "Retrieve a vector by ID",
+		summary: "Retrieve a vector by namespsace and ID",
         parameters: {
 			namespace: Path(String, {
-				description: "Name of the vector namespace",
+				description: "Name of the vector index namespace",
 			}),
 			vectorId: Path(String, {
 				description: "Unique ID of the vector in the given namespace",
