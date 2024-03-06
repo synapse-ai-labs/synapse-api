@@ -67,7 +67,7 @@ export class D1 {
             LIST_EMBEDDINGS_BY_VECTOR_IDS_SQL
         ).bind(
             namespace,
-            vectorIds.map(o => `'${o}'`).join(',')
+            vectorIds.map(o => `${o}`).join(',')
         ).all();
         return results;
     }

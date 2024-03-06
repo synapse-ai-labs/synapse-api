@@ -8,6 +8,7 @@ import { VectorFetch } from "./endpoints/vectorFetch";
 import { VectorDelete } from "./endpoints/vectorDelete";
 import { NamespaceList } from "./endpoints/namespaceList";
 import { NamespaceCreate } from "endpoints/namespaceCreate";
+import { Env } from "env";
 
 export interface EmbeddingResponse {
 	shape: number[];
@@ -17,6 +18,7 @@ export interface EmbeddingResponse {
 export const router = OpenAPIRouter({
 	docs_url: "/",
 });
+
 
 router.post("/api/namespaces/:namespace/query", VectorQuery);
 router.post("/api/namespaces/", NamespaceCreate);
@@ -41,5 +43,9 @@ router.all("*", () =>
 );
 
 export default {
-	fetch: router.handle,
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		return router.handle(request, env, ctx).catch((err) => {
+			return Response.json({ error: `Something went wrong` }, { status: 500});
+		});
+	}
 };
