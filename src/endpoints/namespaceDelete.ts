@@ -9,7 +9,7 @@ import { Env } from '../env';
 export class NamespaceDelete extends OpenAPIRoute {
 	static schema: OpenAPIRouteSchema = {
 		tags: ["Namespaces"],
-		summary: "Delete a namespace",
+		summary: "Delete a namespace by name",
 		parameters: {
 			namespace: Path(String, {
 				description: "Namespace name",
