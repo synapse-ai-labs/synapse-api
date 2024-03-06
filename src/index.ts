@@ -23,7 +23,7 @@ router.post("/api/namespaces/", NamespaceCreate);
 router.get("/api/namespaces/", NamespaceList);
 router.get("/api/namespaces/:namespace/", NamespaceFetch);
 router.delete("/api/namespaces/:namespace/", NamespaceDelete);
-router.get("/api/vectors", VectorsList);
+router.get("/api/vectors/:namespace/", VectorsList);
 router.post("/api/vectors/:namespace/", VectorCreate);
 router.get("/api/vectors/:namespace/:vectorId/", VectorFetch);
 router.delete("/api/vectors/:namespace/:vectorId/", VectorDelete);

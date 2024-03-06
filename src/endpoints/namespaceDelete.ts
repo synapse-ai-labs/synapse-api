@@ -4,6 +4,7 @@ import {
 	Path
 } from "@cloudflare/itty-router-openapi";
 import { Env } from '../env';
+import { D1 } from "lib/d1";
 
 
 export class NamespaceDelete extends OpenAPIRoute {
@@ -33,18 +34,21 @@ export class NamespaceDelete extends OpenAPIRoute {
 	) {
         const { namespace } = data.params;
 
-        const { results: deletionIdsResults } = await env.DB.prepare(
-            "SELECT vector_id FROM embeddings WHERE namespace = ?;"
-        ).bind(namespace).all();
-        const deletionIds: string[] = deletionIdsResults.map(o => o.vector_id as string);
+		const d1Client = new D1(env.DB);
+
+		const embeddingResults = await d1Client.listEmbeddingsByNamespace(
+			namespace
+		);
+        const deletionIds: string[] = embeddingResults.map(o => o.vector_id as string);
+		
         const [
             dbEmbeddingsDeletionResult, 
             vectorDeletionResult, 
             dbNamespaceDeletionResult 
         ] = await Promise.all([
-            env.DB.prepare("DELETE FROM embeddings WHERE namespace = ?;").bind(namespace).run(), 
+            d1Client.deleteEmbeddingsByNamespace(namespace), 
             deletionIds ? env.VECTORIZE_INDEX.deleteByIds(deletionIds) : null,
-            env.DB.prepare("DELETE FROM namespaces WHERE name = ?").bind(namespace).run()
+			d1Client.deleteNamespaceByName(namespace)
         ]);
         return {
             success: vectorDeletionResult.count === deletionIds.length

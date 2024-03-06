@@ -6,6 +6,7 @@ import {
 import { Namespace, VectorIndexConfigOverride } from "../types";
 
 import { Env } from "env";
+import { D1 } from "lib/d1";
 
 export class NamespaceList extends OpenAPIRoute {
 	static schema: OpenAPIRouteSchema = {
@@ -44,10 +45,13 @@ export class NamespaceList extends OpenAPIRoute {
 	) {
         const { page, limit } = data.query;
         const offset = (page - 1) * limit;
-        const { results: namespaceResults } = await env.DB.prepare(
-            "SELECT * FROM namespaces LIMIT ? OFFSET ?;"
-        ).bind(limit, offset).all(); 
 
+		const d1Client = new D1(env.DB);
+
+		const namespaceResults = await d1Client.listNamespaces(
+			limit,
+			offset
+		);
         let namespaces;
         if (namespaceResults.length === 0) {
             namespaces = [];

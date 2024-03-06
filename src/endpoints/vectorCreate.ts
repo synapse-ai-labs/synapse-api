@@ -15,6 +15,7 @@ import {
 import {
 	StatusCodes,
  } from 'http-status-codes';
+import { D1 } from 'lib/d1';
 
 
 export class VectorCreate extends OpenAPIRoute {
@@ -40,21 +41,6 @@ export class VectorCreate extends OpenAPIRoute {
 		},
 	};
 
-	async createNamespace(namespace: string, model: string, env: Env) {
-		const embeddingsInsertSql = `INSERT INTO namespaces (name, model) VALUES (?, ?) RETURNING *;`; 
-		const { results } = await env.DB.prepare(
-			embeddingsInsertSql
-		).bind(namespace, model).all();
-		return results;
-	};
-
-	async getNamespace(namespace: string, env: Env) {
-		const { results } = await env.DB.prepare(
-			`SELECT * FROM namespaces WHERE name = ?;`,
-		).bind(namespace).all();
-		return results;
-	}
-
 	async handle(
 		request: Request,
 		env: Env,
@@ -71,26 +57,26 @@ export class VectorCreate extends OpenAPIRoute {
 		});
 		const { namespace } = data.params;
 
+		const d1Client = new D1(env.DB);
+
         const openai = new OpenAI({
             apiKey: env.OPENAI_API_KEY
         });
 		const model = vectorsToCreate.model ?? DEFAULT_OPENAI_EMBEDDING_MODEL;
 		try {
-			let namespaceResults = await this.getNamespace(
-				namespace,
-				env
+			let namespaceData = await d1Client.retrieveNamespace(
+				namespace
 			);
-			if (namespaceResults.length === 0) {
-				namespaceResults = await this.createNamespace(namespace, model, env);
+			if (!namespaceData) {
+				namespaceData = await d1Client.createNamespace(namespace, model);
 			}
-			if (namespaceResults.length === 0) {
+			if (!namespaceData) {
 				return Response.json({ 
 					error: `Failed to create a Cloudflare namespace in your D1 database` 
 				}, {
 					status: StatusCodes.BAD_REQUEST
 				});
 			}
-			const namespaceData = namespaceResults[0];
 
 			const { data: embeddingData } = await openai.embeddings.create(
 				{
@@ -111,16 +97,14 @@ export class VectorCreate extends OpenAPIRoute {
 				namespace,
 				metadata: parsedData[i].metadata,
 			}));
-			const insertionSql = `INSERT INTO embeddings (source, namespace, vector_id) VALUES (?, ?, ?) ON CONFLICT (vector_id) DO UPDATE SET source = EXCLUDED.source;`;
-			const d1Inserts = insertionData.map((o, i) => {
-				return env.DB.prepare(insertionSql).bind(
-					parsedData[i].text,
-					namespace,
-					parsedData[i].id
-				)
-			});
 			const vectorizeResult = await env.VECTORIZE_INDEX.insert(insertionData);
-			await env.DB.batch(d1Inserts);
+			await d1Client.bulkEmbeddingsInsert(
+				insertionData.map((o, i) => ({
+					text: parsedData[i].text,
+					namespace,
+					vectorId: parsedData[i].id
+				}))
+			);
 			return {
 				success: true,
 				vectors: vectorizeResult.ids.map((id, i) => ({

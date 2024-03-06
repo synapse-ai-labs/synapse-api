@@ -2,10 +2,12 @@ import {
 	OpenAPIRoute,
 	OpenAPIRouteSchema,
 	Query,
+	Path,
 } from "@cloudflare/itty-router-openapi";
 import { Vector } from "../types";
 
 import { Env } from "env";
+import { D1 } from "lib/d1";
 
 export class VectorsList extends OpenAPIRoute {
 	static schema: OpenAPIRouteSchema = {
@@ -22,6 +24,10 @@ export class VectorsList extends OpenAPIRoute {
 				required: false,
                 default: 10,
 			}),
+			namespace: Path(String, {
+				description: "Name of the namespace for which to list vectors",
+				required: true
+			})
 		},
 		responses: {
 			"200": {
@@ -44,9 +50,16 @@ export class VectorsList extends OpenAPIRoute {
 	) {
         const { page, limit } = data.query;
         const offset = (page - 1) * limit;
-        const { results } = await env.DB.prepare(
-            "SELECT * FROM embeddings LIMIT ? OFFSET ?;"
-        ).bind(limit, offset).all(); 
+
+		const { namespace } = data.params;
+
+		const d1Client = new D1(env.DB);
+
+		const results = await d1Client.listEmbeddingsByNamespacePaginated(
+			namespace,
+			limit,
+			offset
+		);
 		return {
 			success: true,
 			vectors: results.map((o) => ({

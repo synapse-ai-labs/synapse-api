@@ -7,6 +7,7 @@ import { Env } from '../env';
 import {
 	StatusCodes,
  } from 'http-status-codes';
+import { D1 } from "lib/d1";
 
 
 export class NamespaceCreate extends OpenAPIRoute {
@@ -27,14 +28,6 @@ export class NamespaceCreate extends OpenAPIRoute {
 		},
 	};
 
-	async createNamespace(namespace: string, model: string, env: Env) {
-		const embeddingsInsertSql = `INSERT INTO namespaces (name, model) VALUES (?, ?) RETURNING *;`; 
-		const { results } = await env.DB.prepare(
-			embeddingsInsertSql
-		).bind(namespace, model).all();
-		return results;
-	};
-
 	async handle(
 		request: Request,
 		env: Env,
@@ -42,40 +35,39 @@ export class NamespaceCreate extends OpenAPIRoute {
 		data: Record<string, any>
 	) {
 		const namespaceToCreate = data.body; 
-		const { results: existingNamespaceResults } = await env.DB.prepare(
-			"SELECT * FROM namespaces WHERE name = ?;"
-		).bind(namespaceToCreate.name).all();
-		if (existingNamespaceResults.length === 1) {
+		const d1Client = new D1(env.DB);
+
+		const existingNamespace = await d1Client.retrieveNamespace(
+			namespaceToCreate.name
+		);
+		if (existingNamespace) {
 			return Response.json({ error: `Namespace with name ${namespaceToCreate.name} already exists`}, {
 				status: StatusCodes.BAD_REQUEST
 			});
 		} 
-
-        let namespaceResults = await this.createNamespace(
-            namespaceToCreate.name,
-            namespaceToCreate.model,
-            env
-        );
-        if (namespaceResults.length === 0) {
+		let createdNamespace = await d1Client.createNamespace(
+			namespaceToCreate.name,
+			namespaceToCreate.model
+		);
+        if (!createdNamespace) {
             return Response.json({ 
                 error: `Failed to create a Cloudflare namespace in your D1 database` 
             }, {
                 status: StatusCodes.BAD_REQUEST
             });
         }
-        const namespaceData = namespaceResults[0];
 		const vectorIndexResult = await env.VECTORIZE_INDEX.describe();
 		const vectorIndexConfig = vectorIndexResult.config as VectorIndexConfigOverride;
         return {
             success: true,
             namespace: {
-                id: namespaceData.id,
-                name: namespaceData.name,
+                id: createdNamespace.id,
+                name: createdNamespace.name,
                 description: vectorIndexResult.description,
                 dimensionality: vectorIndexConfig.dimensions,
                 distance: vectorIndexConfig.metric,
                 indexName: vectorIndexResult.name,
-                model: namespaceData.model
+                model: createdNamespace.model
             },
         };
 	}

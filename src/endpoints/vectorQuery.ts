@@ -13,6 +13,7 @@ import {
 import {
 	StatusCodes,
  } from 'http-status-codes';
+import { D1 } from 'lib/d1';
 
 
 export class VectorQuery extends OpenAPIRoute {
@@ -47,15 +48,16 @@ export class VectorQuery extends OpenAPIRoute {
         const { namespace } = data.params;
 		const queryBody = data.body;
 
-        const { results } = await env.DB.prepare(
-            `SELECT * FROM namespaces WHERE name = ? LIMIT 1;`
-        ).bind(namespace).all();
-        if (results.length === 0) {
+		const d1Client = new D1(env.DB);
+
+		const namespaceResult = await d1Client.retrieveNamespace(
+			namespace
+		);
+        if (!namespaceResult) {
             return Response.json({
                 error: `Cloudflare namespace ${namespace} does not exist.`
             });
         }
-        const namespaceResult = results[0];
         
         const openai = new OpenAI({
             apiKey: env.OPENAI_API_KEY
@@ -75,10 +77,10 @@ export class VectorQuery extends OpenAPIRoute {
                 embeddingData[0].embedding,
                 queryOpts
             );
-			const embeddingsQuery = `SELECT * FROM embeddings WHERE namespace = '${namespace}' AND vector_id IN (${vectorizeQueryResult.matches.map(o => `'${o.id}'`).join(',')})`;
-			const { results } = await env.DB.prepare(
-				embeddingsQuery
-			).all();
+			const results = await d1Client.listEmbeddingsByVectorIds(
+				namespace,
+				vectorizeQueryResult.matches.map(o => o.id),
+			);
 			return {
 				success: true,
 				matches: vectorizeQueryResult.matches.map((o, i) => ({

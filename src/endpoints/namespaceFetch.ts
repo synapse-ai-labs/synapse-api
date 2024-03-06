@@ -7,6 +7,7 @@ import { Namespace, VectorIndexConfigOverride } from "../types";
 
 import { Env } from "env";
 import { StatusCodes } from "http-status-codes";
+import { D1 } from "lib/d1";
 
 export class NamespaceFetch extends OpenAPIRoute {
 	static schema: OpenAPIRouteSchema = {
@@ -38,13 +39,15 @@ export class NamespaceFetch extends OpenAPIRoute {
 	) {
 		const { namespace } = data.params;
 
-		const { results: namespaceResults } = await env.DB.prepare(
-			"SELECT * FROM namespaces WHERE name = ?"
-		).bind(namespace).all();
-		if (namespaceResults.length === 0) {
+		const d1Client = new D1(env.DB);
+
+		const namespaceResult = await d1Client.retrieveNamespace(
+			namespace
+		);
+		if (!namespaceResult) {
 			return Response.json({ error: `Namespace with name ${namespace} not found`}, { status: StatusCodes.NOT_FOUND});
 		}
-		const namespaceResult = namespaceResults[0];
+		
 		const vectorIndexResult = await env.VECTORIZE_INDEX.describe();
 		const vectorIndexConfig = vectorIndexResult.config as VectorIndexConfigOverride;
 		return {

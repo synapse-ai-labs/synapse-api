@@ -6,6 +6,7 @@ import {
 import { Vector } from "../types";
 
 import { Env } from "env";
+import { D1 } from "lib/d1";
 
 export class VectorFetch extends OpenAPIRoute {
 	static schema: OpenAPIRouteSchema = {
@@ -46,17 +47,17 @@ export class VectorFetch extends OpenAPIRoute {
         if (vectorResults.length === 0) {
             return Response.json({ error: `Vector not found for vectorId '${vectorId}`});
         }
-        const vectorResult = vectorResults[0];
-        const { results: embeddingsResults } = await env.DB.prepare(
-            "SELECT * FROM embeddings WHERE namespace = ? AND vector_id = ? LIMIT 1;"
-        ).bind(namespace, vectorResult.id).all();
-        const embeddingResult = embeddingsResults[0];
-        
-        const { results: namespaceResults } = await env.DB.prepare(
-            "SELECT * FROM namespaces WHERE name = ? LIMIT 1;"
-        ).bind(namespace).all();
-        const namespaceResult = namespaceResults[0];
+		const vectorResult = vectorResults[0];
 
+		const d1Client = new D1(env.DB);
+		const embeddingResult = await d1Client.retrieveEmbeddingByVectorId(
+			namespace,
+			vectorResult.id
+		);
+
+		const namespaceResult = await d1Client.retrieveNamespace(
+			namespace
+		);
         const vector = {
             id: vectorResult.id,
             source: embeddingResult.source,
