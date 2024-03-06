@@ -8,6 +8,7 @@ import { VectorsList } from "./endpoints/vectorList";
 import { VectorCreate } from "./endpoints/vectorCreate";
 import { VectorQuery } from "./endpoints/vectorQuery";
 import { VectorFetch } from "./endpoints/vectorFetch";
+import { VectorDelete } from "./endpoints/vectorDelete";
 import { NamespaceList } from "./endpoints/namespaceList";
 
 export interface EmbeddingResponse {
@@ -25,6 +26,7 @@ router.get("/api/namespaces/:namespace/", NamespaceFetch);
 router.get("/api/vectors", VectorsList);
 router.post("/api/vectors/:namespace/", VectorCreate);
 router.get("/api/vectors/:namespace/:vectorId/", VectorFetch);
+router.delete("/api/vectors/:namespace/:vectorId/", VectorDelete);
 
 
 router.get("/api/tasks/", TaskList);

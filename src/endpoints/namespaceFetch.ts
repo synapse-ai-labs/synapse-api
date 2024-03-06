@@ -1,9 +1,7 @@
 import {
 	OpenAPIRoute,
 	OpenAPIRouteSchema,
-	Query,
-    Path,
-	Str
+    Path
 } from "@cloudflare/itty-router-openapi";
 import { Namespace, VectorIndexConfigOverride } from "../types";
 
@@ -12,7 +10,7 @@ import { StatusCodes } from "http-status-codes";
 
 export class NamespaceFetch extends OpenAPIRoute {
 	static schema: OpenAPIRouteSchema = {
-		tags: ["Namespace"],
+		tags: ["Namespaces"],
 		summary: "Retrieve a namespace by name",
 		parameters: {
 			namespace: Path(String, {
@@ -49,7 +47,6 @@ export class NamespaceFetch extends OpenAPIRoute {
 		const namespaceResult = namespaceResults[0];
 		const vectorIndexResult = await env.VECTORIZE_INDEX.describe();
 		const vectorIndexConfig = vectorIndexResult.config as VectorIndexConfigOverride;
-
 		return {
 			success: true,
 			namespace: {
