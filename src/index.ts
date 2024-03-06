@@ -4,6 +4,7 @@ import { TaskDelete } from "./endpoints/taskDelete";
 import { TaskFetch } from "./endpoints/taskFetch";
 import { TaskList } from "./endpoints/taskList";
 import { NamespaceFetch } from "./endpoints/namespaceFetch";
+import { NamespaceDelete } from "./endpoints/namespaceDelete";
 import { VectorsList } from "./endpoints/vectorList";
 import { VectorCreate } from "./endpoints/vectorCreate";
 import { VectorQuery } from "./endpoints/vectorQuery";
@@ -23,6 +24,7 @@ export const router = OpenAPIRouter({
 router.post("/api/namespaces/:namespace/query", VectorQuery);
 router.get("/api/namespaces/", NamespaceList);
 router.get("/api/namespaces/:namespace/", NamespaceFetch);
+router.delete("/api/namespaces/:namespace/", NamespaceDelete);
 router.get("/api/vectors", VectorsList);
 router.post("/api/vectors/:namespace/", VectorCreate);
 router.get("/api/vectors/:namespace/:vectorId/", VectorFetch);
