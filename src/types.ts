@@ -26,6 +26,11 @@ export const Namespace = {
 	embeddingModel: String
 };
 
+export const NamespaceBody = {
+	name: new Str({ example: "customers",  required: true}),
+	embeddingModel: String
+};
+
 
 export const VectorBody = {
 	id: new Str({ required: false }),

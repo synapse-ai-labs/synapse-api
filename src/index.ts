@@ -1,8 +1,4 @@
 import { OpenAPIRouter } from "@cloudflare/itty-router-openapi";
-import { TaskCreate } from "./endpoints/taskCreate";
-import { TaskDelete } from "./endpoints/taskDelete";
-import { TaskFetch } from "./endpoints/taskFetch";
-import { TaskList } from "./endpoints/taskList";
 import { NamespaceFetch } from "./endpoints/namespaceFetch";
 import { NamespaceDelete } from "./endpoints/namespaceDelete";
 import { VectorsList } from "./endpoints/vectorList";
@@ -11,6 +7,7 @@ import { VectorQuery } from "./endpoints/vectorQuery";
 import { VectorFetch } from "./endpoints/vectorFetch";
 import { VectorDelete } from "./endpoints/vectorDelete";
 import { NamespaceList } from "./endpoints/namespaceList";
+import { NamespaceCreate } from "endpoints/namespaceCreate";
 
 export interface EmbeddingResponse {
 	shape: number[];
@@ -22,6 +19,7 @@ export const router = OpenAPIRouter({
 });
 
 router.post("/api/namespaces/:namespace/query", VectorQuery);
+router.post("/api/namespaces/", NamespaceCreate);
 router.get("/api/namespaces/", NamespaceList);
 router.get("/api/namespaces/:namespace/", NamespaceFetch);
 router.delete("/api/namespaces/:namespace/", NamespaceDelete);
@@ -30,11 +28,6 @@ router.post("/api/vectors/:namespace/", VectorCreate);
 router.get("/api/vectors/:namespace/:vectorId/", VectorFetch);
 router.delete("/api/vectors/:namespace/:vectorId/", VectorDelete);
 
-
-router.get("/api/tasks/", TaskList);
-router.post("/api/tasks/", TaskCreate);
-router.get("/api/tasks/:taskSlug/", TaskFetch);
-router.delete("/api/tasks/:taskSlug/", TaskDelete);
 
 // 404 for everything else
 router.all("*", () =>
