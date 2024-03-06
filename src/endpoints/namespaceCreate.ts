@@ -42,13 +42,20 @@ export class NamespaceCreate extends OpenAPIRoute {
 		data: Record<string, any>
 	) {
 		const namespaceToCreate = data.body; 
+		const { results: existingNamespaceResults } = await env.DB.prepare(
+			"SELECT * FROM namespaces WHERE name = ?;"
+		).bind(namespaceToCreate.name).all();
+		if (existingNamespaceResults.length === 1) {
+			return Response.json({ error: `Namespace with name ${namespaceToCreate.name} already exists`}, {
+				status: StatusCodes.BAD_REQUEST
+			});
+		} 
 
         let namespaceResults = await this.createNamespace(
             namespaceToCreate.name,
             namespaceToCreate.model,
             env
         );
-        console.log({namespaceResults});
         if (namespaceResults.length === 0) {
             return Response.json({ 
                 error: `Failed to create a Cloudflare namespace in your D1 database` 
@@ -57,11 +64,8 @@ export class NamespaceCreate extends OpenAPIRoute {
             });
         }
         const namespaceData = namespaceResults[0];
-        console.log({namespaceData});
 		const vectorIndexResult = await env.VECTORIZE_INDEX.describe();
-        console.log({vectorIndexResult});
 		const vectorIndexConfig = vectorIndexResult.config as VectorIndexConfigOverride;
-        console.log({vectorIndexConfig});
         return {
             success: true,
             namespace: {
