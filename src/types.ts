@@ -22,7 +22,8 @@ export const Namespace = {
 	description: String,
 	dimensionality: Number,
 	distance: Distance,
-	vectorsCount: Number
+	indexName: String,
+	embeddingModel: String
 };
 
 
