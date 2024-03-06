@@ -1,9 +1,6 @@
-import OpenAI, { NotFoundError as OpenAINotFoundError } from 'openai';
-
 import {
 	OpenAPIRoute,
 	OpenAPIRouteSchema,
-	Path
 } from "@cloudflare/itty-router-openapi";
 import { NamespaceBody, Namespace, VectorIndexConfigOverride } from "../types";
 import { Env } from '../env';
@@ -48,7 +45,7 @@ export class NamespaceCreate extends OpenAPIRoute {
 
         let namespaceResults = await this.createNamespace(
             namespaceToCreate.name,
-            namespaceToCreate.embeddingModel,
+            namespaceToCreate.model,
             env
         );
         console.log({namespaceResults});
@@ -74,7 +71,7 @@ export class NamespaceCreate extends OpenAPIRoute {
                 dimensionality: vectorIndexConfig.dimensions,
                 distance: vectorIndexConfig.metric,
                 indexName: vectorIndexResult.name,
-                embeddingModel: namespaceData.model
+                model: namespaceData.model
             },
         };
 	}

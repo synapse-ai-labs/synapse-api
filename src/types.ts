@@ -23,12 +23,12 @@ export const Namespace = {
 	dimensionality: Number,
 	distance: Distance,
 	indexName: String,
-	embeddingModel: String
+	model: String
 };
 
 export const NamespaceBody = {
 	name: new Str({ example: "customers",  required: true}),
-	embeddingModel: String
+	model: String
 };
 
 
@@ -48,7 +48,7 @@ export const Vector = {
 	source: String,
 	metadata: Obj,
 	values: [Number],
-	embeddingModel: new Str({ required: false})
+	model: new Str({ required: false})
 };
 
 export declare type VectorIndexConfigOverride = {

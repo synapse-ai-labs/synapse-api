@@ -56,7 +56,7 @@ export class NamespaceFetch extends OpenAPIRoute {
 				dimensionality: vectorIndexConfig.dimensions,
 				distance: vectorIndexConfig.metric,
 				indexName: vectorIndexResult.name,
-				embeddingModel: namespaceResult.model
+				model: namespaceResult.model
 			}
 		};
 	}

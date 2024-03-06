@@ -62,7 +62,7 @@ export class VectorFetch extends OpenAPIRoute {
             source: embeddingResult.source,
             metadata: embeddingResult.metadata,
             values: vectorResult.values,
-            embeddingModel: namespaceResult.model
+            model: namespaceResult.model
         };
 		return {
 			success: true,

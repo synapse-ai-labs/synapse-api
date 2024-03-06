@@ -61,7 +61,7 @@ export class NamespaceList extends OpenAPIRoute {
                 dimensionality: vectorIndexConfig.dimensions,
                 distance: vectorIndexConfig.metric,
                 indexName: vectorIndexResult.name,
-                embeddingModel: o.model
+                model: o.model
             }));
         }
 		return {
