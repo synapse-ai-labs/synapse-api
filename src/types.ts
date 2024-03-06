@@ -42,6 +42,7 @@ export const Vector = {
 	source: String,
 	metadata: Obj,
 	values: [Number],
+	embeddingModel: new Str({ required: false})
 };
 
 export declare type VectorIndexConfigOverride = {
