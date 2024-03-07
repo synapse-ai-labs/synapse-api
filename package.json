@@ -5,13 +5,17 @@
 	"scripts": {
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
-		"start": "wrangler dev"
+		"start": "wrangler dev",
+		"create-db": "wrangler d1 create synapse",
+		"create-vectorstore": "wrangler vectorize create synapse",
+		"create-db-schema": "npx wrangler d1 execute synapse --local --file=./schema.sql"
 	},
 	"dependencies": {
 		"@cfworker/uuid": "^1.12.4",
 		"@cloudflare/ai": "^1.0.53",
 		"@cloudflare/itty-router-openapi": "^1.0.1",
 		"@qdrant/js-client-rest": "^1.7.0",
+		"cloudflare": "^2.9.1",
 		"http-status-codes": "^2.3.0",
 		"openai": "^4.28.4"
 	},

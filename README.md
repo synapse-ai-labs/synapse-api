@@ -1,25 +1,47 @@
-# Cloudflare Workers OpenAPI 3.1
+# SynapseAPI - Vector Embeddings using Cloudflare's Vectorize and OpenAI
 
+## Overview
 This is a Cloudflare Worker with OpenAPI 3.1 using [itty-router-openapi](https://github.com/cloudflare/itty-router-openapi).
 
-This is an example project made to be used as a quick start into building OpenAPI compliant Workers that generates the
+This project is a quick start into building OpenAPI compliant Workers that generates the
 `openapi.json` schema automatically from code and validates the incoming request to the defined parameters or request body.
 
-## Get started
+## Get Started
+1. Sign up for a Cloudflare Workers account
+2. Sign up for OpenAI API access and obtain an API key 
+3. Create a `.dev.vars` file (Git-ignored). Add an env entry for `OPENAI_API_KEY`.
+4. Clone this project and install dependencies using yarn install (maybe) [could be npm install]
+5. Run `wrangler login` to auth with your Cloudflare account in **wrangler**
+6. Run `yarn create-db` to create a D1 database (name defaults to: **synapse**)
+7. Run `yarn create-db-schema` to create the relevant tables for your D1 metadata layer.
+8. Run `yarn create-vectorstore --dimensions=1024 --metric cosine`.
 
-1. Sign up for [Cloudflare Workers](https://workers.dev). The free tier is more than enough for most use cases.
-2. Clone this project and install dependencies with `npm install`
-3. Run `wrangler login` to login to your Cloudflare account in wrangler
-4. Run `wrangler deploy` to publish the API to Cloudflare Workers
+As shown in the above yarn command, you will need to specify `dimensions` and distance `metric` params. See here for an up-to-date list of allowed values: https://developers.cloudflare.com/vectorize/configuration/create-indexes/#distance-metrics. At the time of writing, the following are supported: `cosine`, `euclidean`, and `dot-product`.
 
-## Project structure
+The max `dimensions` value at the time of writing is **1536** (which appears to originate from OpenAI's `ada-002` embedding model output size). See here for more information on why dimensions are relevant: https://developers.cloudflare.com/vectorize/configuration/create-indexes/#dimensions. 
 
-1. Your main router is defined in `src/index.ts`.
-2. Each endpoint has its own file in `src/endpoints/`.
-3. For more information read the [itty-router-openapi official documentation](https://cloudflare.github.io/itty-router-openapi/).
+You cannot change the dimensions value for an index once the Vectorize index has been created.
 
-## Development
+9. Run `wrangler deploy` to deploy the API to production, making it accessible remotely. 
 
+## Endpoints
+### `POST /api/namespaces/:namespace/insert`: Insert an embedded vector
+### `POST /api/namespaces/:namespace/query`: Query a namespace
+### `POST /api/namespaces/`: Create a namespace (a keyed space, a way to organize data)
+### `GET /api/namespaces/`: List namespaces
+### `GET /api/namespaces/:namespace/`: Retrieve a namespace by name
+### `DELETE /api/namespaces/:namespace/`: Delete a namespace by name
+### `GET /api/namespaces/:namespace/vectors`: List vectors associated with a given namespace
+### `GET /api/namespaces/:namespace/:vectorId/`: Retrieve a specific vector in a given namespace
+### `DELETE /api/namespaces/:namespace/:vectorId/`: Delete a vector in a given namespace
+
+
+## Limitations=
+
+## Production
+Access OpenAPI documentation at /docs.
+
+## Local Development
 1. Run `wrangler dev` to start a local instance of the API.
 2. Open `http://localhost:9000/` in your browser to see the Swagger interface where you can try the endpoints.
 3. Changes made in the `src/` folder will automatically trigger the server to reload, you only need to refresh the Swagger interface.
