@@ -6,9 +6,9 @@
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
 		"start": "wrangler dev",
-		"create-db": "wrangler d1 create synapse",
-		"create-vectorstore": "wrangler vectorize create synapse",
-		"create-db-schema": "npx wrangler d1 execute synapse --local --file=./schema.sql"
+		"create-db": "wrangler d1 create synapse1",
+		"create-vectorstore": "wrangler vectorize create synapse1",
+		"create-db-schema": "npx wrangler d1 execute synapse1 --file=./schema.sql"
 	},
 	"dependencies": {
 		"@cfworker/uuid": "^1.12.4",

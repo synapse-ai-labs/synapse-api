@@ -27,14 +27,31 @@ Both the `metric` and `dimensions` values for an index are fixed, and cannot be 
 ## Endpoints
 ### `POST /api/namespaces/:namespace/insert`
 **Insert an embedding vector**
-### `POST /api/namespaces/:namespace/query`: Query a namespace
-### `POST /api/namespaces/`: Create a namespace (a keyed space, a way to organize data)
-### `GET /api/namespaces/`: List namespaces
-### `GET /api/namespaces/:namespace/`: Retrieve a namespace by name
-### `DELETE /api/namespaces/:namespace/`: Delete a namespace by name 
-### `DELETE /api/namespaces/:namespace/vectors`: List vectors associated with a given namespace 
-### `GET /api/namespaces/:namespace/:vectorId/`: Retrieve a specific vector in a given namespace
-### `DELETE /api/namespaces/:namespace/:vectorId/`: Delete a vector in a given namespace
+
+
+### `POST /api/namespaces/:namespace/query` 
+**Query a namespace**
+
+### `POST /api/namespaces/`
+**Create a namespace (a partition key within an index)**
+
+### `GET /api/namespaces/`
+**List namespaces**
+
+### `GET /api/namespaces/:namespace/`
+**Retrieve a namespace by name**
+
+### `DELETE /api/namespaces/:namespace/`
+**Delete a namespace by name**
+
+### `DELETE /api/namespaces/:namespace/vectors`
+**List vectors associated with a given namespace**
+
+### `GET /api/namespaces/:namespace/:vectorId/`
+**Retrieve a specific vector in a given namespace**
+
+### `DELETE /api/namespaces/:namespace/:vectorId/`
+**Delete a vector in a given namespace**
 
 
 ## OpenAI
