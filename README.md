@@ -15,11 +15,11 @@ git clone https://github.com/aaronjoyce/ts-embedding-api.git
 cd ts-embedding-api
 yarn install
 ```
-6. Create a `.dev.vars` file (Git-ignored). Add an env entry for `OPENAI_API_KEY`, setting the value to the API key generated in step #2.
-7. Run `yarn login` to auth with your Cloudflare account in **wrangler**
-8. Run `yarn create-db` to create a D1 database (name defaults to: **synapse**)
-9. Run `yarn create-db-schema` to create the relevant tables for your D1 metadata layer.
-10. Run `yarn create-vectorstore --dimensions=1024 --metric cosine`.
+4. Create a `.dev.vars` file (Git-ignored). Add an env entry for `OPENAI_API_KEY`, setting the value to the API key generated in step **#2**.
+5. Run `yarn login` to auth with your Cloudflare account in **wrangler**
+6. Run `yarn create-db` to create a D1 database (name defaults to: **synapse**)
+7. Run `yarn create-db-schema` to create the relevant tables for your D1 metadata layer.
+8. Run `yarn create-vectorstore --dimensions=1024 --metric cosine`.
 
 As shown in the above yarn command, you will need to specify `dimensions` and distance `metric` params. See [here](https://developers.cloudflare.com/vectorize/configuration/create-indexes/#distance-metrics) for an up-to-date list of allowed values. At the time of writing, the following are supported: `cosine`, `euclidean`, and `dot-product`.
 
@@ -27,7 +27,7 @@ The max `dimensions` value at the time of writing is **1536** (which appears to 
 
 Both the `metric` and `dimensions` values for an index are fixed, and cannot be changed once the Vectorize index has been created.
 
-11. Run `yarn wrangler deploy` to deploy the API to production, making it accessible remotely. 
+9. Run `yarn wrangler deploy` to deploy the API to production, making it accessible remotely. 
 
 ## Endpoints
 ### `POST /api/namespaces/:namespace/insert`
@@ -63,14 +63,14 @@ Both the `metric` and `dimensions` values for an index are fixed, and cannot be 
 By default, this project uses OpenAI's `text-embedding-3-large` model to embed the provided text. You may override this either by setting an alternative valid model name env 
 `DEFAULT_OPENAI_EMBEDDING_MODEL` or when inserting an embedding vector.
 
-You can only override the `model` request body param when inserting the very first vector into a namespace. Once a namespace has been created, the embedding model associated with the namespace becomes fixed. The rationale behind this is that the embeddings of particular model cannot be shared with the embeddings of anoher model - (see here)[https://community.openai.com/t/are-embeddings-tied-to-a-particular-model/286394] for more info.
+You can only override the `model` request body param when inserting the very first vector into a namespace. Once a namespace has been created, the embedding model associated with the namespace becomes fixed. The rationale behind this is that the embeddings of particular model cannot be shared with the embeddings of anoher model - [see here](https://community.openai.com/t/are-embeddings-tied-to-a-particular-model/286394) for more info.
 If you override the `model` request body param when inserting a vector, the **namespace** in which you are intending to insert the vecto
 
 ## Limitations
 
 
 ## Production
-Access OpenAPI documentation at /docs.
+Access OpenAPI documentation at `/docs`.
 
 ## Local Development
 1. Run `yarn dev` to start a local instance of the API.
