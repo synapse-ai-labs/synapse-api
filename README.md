@@ -25,7 +25,8 @@ Both the `metric` and `dimensions` values for an index are fixed, and cannot be 
 9. Run `wrangler deploy` to deploy the API to production, making it accessible remotely. 
 
 ## Endpoints
-### `POST /api/namespaces/:namespace/insert`: Insert an embedding vector
+### `POST /api/namespaces/:namespace/insert`
+**Insert an embedding vector**
 ### `POST /api/namespaces/:namespace/query`: Query a namespace
 ### `POST /api/namespaces/`: Create a namespace (a keyed space, a way to organize data)
 ### `GET /api/namespaces/`: List namespaces
