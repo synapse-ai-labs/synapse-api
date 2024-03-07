@@ -13,3 +13,4 @@ database_id = "e190383f-3cb2-4097-bc67-f117f629aa37"
 
 [vars]
 EMBEDDING_DIMENSIONALITY = 1024
+DEFAULT_OPENAI_EMBEDDING_MODEL = "text-embedding-3-large"

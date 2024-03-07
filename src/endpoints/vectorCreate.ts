@@ -9,8 +9,7 @@ import { MultiVectorBody, Vector } from "../types";
 import { Env } from '../env';
 import { uuid } from '@cfworker/uuid';
 import { 
-	CLOUDFLARE_ERROR_CODE_INSERT_VECTOR_INDEX_SIZE_MISMATCH, 
-	DEFAULT_OPENAI_EMBEDDING_MODEL 
+	CLOUDFLARE_ERROR_CODE_INSERT_VECTOR_INDEX_SIZE_MISMATCH
 } from '../constants';
 import {
 	StatusCodes,
@@ -62,7 +61,7 @@ export class VectorCreate extends OpenAPIRoute {
         const openai = new OpenAI({
             apiKey: env.OPENAI_API_KEY
         });
-		const model = vectorsToCreate.model ?? DEFAULT_OPENAI_EMBEDDING_MODEL;
+		const model = vectorsToCreate.model ?? env.DEFAULT_OPENAI_EMBEDDING_MODEL;
 		try {
 			let namespaceData = await d1Client.retrieveNamespace(
 				namespace

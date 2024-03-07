@@ -20,12 +20,12 @@ As shown in the above yarn command, you will need to specify `dimensions` and di
 
 The max `dimensions` value at the time of writing is **1536** (which appears to originate from OpenAI's `ada-002` embedding model output size). See here for more information on why dimensions are relevant: https://developers.cloudflare.com/vectorize/configuration/create-indexes/#dimensions. 
 
-You cannot change the dimensions value for an index once the Vectorize index has been created.
+Both the `metric` and `dimensions` values for an index are fixed, and cannot be changed once the Vectorize index has been created.
 
 9. Run `wrangler deploy` to deploy the API to production, making it accessible remotely. 
 
 ## Endpoints
-### `POST /api/namespaces/:namespace/insert`: Insert an embedded vector
+### `POST /api/namespaces/:namespace/insert`: Insert an embedding vector
 ### `POST /api/namespaces/:namespace/query`: Query a namespace
 ### `POST /api/namespaces/`: Create a namespace (a keyed space, a way to organize data)
 ### `GET /api/namespaces/`: List namespaces
@@ -36,7 +36,15 @@ You cannot change the dimensions value for an index once the Vectorize index has
 ### `DELETE /api/namespaces/:namespace/:vectorId/`: Delete a vector in a given namespace
 
 
-## Limitations=
+## OpenAI
+By default, this project uses OpenAI's `text-embedding-3-large` model to embed the provided text. You may override this either by setting an alternative valid model name env 
+`DEFAULT_OPENAI_EMBEDDING_MODEL` or when inserting an embedding vector.
+
+If you override the `model` request body param when inserting a vector, the **namespace** in which
+you are intending to insert the 
+
+## Limitations
+
 
 ## Production
 Access OpenAPI documentation at /docs.
