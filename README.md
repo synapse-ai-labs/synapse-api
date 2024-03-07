@@ -1,4 +1,4 @@
-# SynapseAPI - Vector Embeddings using Cloudflare's Vectorize and OpenAI
+# SynapseAPI - Serverless Vector Embeddings API using Cloudflare's Vectorize and OpenAI
 
 ## Overview
 This is a Cloudflare Worker with OpenAPI 3.1 using [itty-router-openapi](https://github.com/cloudflare/itty-router-openapi).
@@ -32,9 +32,10 @@ Both the `metric` and `dimensions` values for an index are fixed, and cannot be 
 ## Endpoints
 
 ### `POST /api/namespaces/:namespace/insert`
-**Insert embedding vectors**
+**Insert one or more embedding vectors**
 
-**Request body:**
+**Request body**
+
 Example:
 ```
 {
@@ -45,19 +46,72 @@ Example:
     "model": "text-embedding-3-large" 
 }
 ```
-```{
-    vectors: [{ 
+
+```
+{
+    vectors: { 
         text: string, 
-        metadata: string (json-encoded object) [optional],
+        metadata: string (JSON-encoded object) [optional],
         id: string [optional, defaults to a UUID] 
-    }],
+    }[],
     model: string
 }
 ```
 
+Returns:
+```
+{
+    "vectors": [
+        {
+        "id": "48a4fcee-1b02-4fa0-92c2-22c1213e7434",
+	    "source": "embed text #1",
+	    "metadata": {"userId": 1},
+	    "values": [0.001, -2.034, ..., 0.332],
+	    "model": "text-embedding-3-large"
+        }
+    ] 
+}
+```
 
 ### `POST /api/namespaces/:namespace/query` 
 **Query a namespace**
+Generates an embedding using the model associated with the namespace, 
+and queries the embedding output against the existing vectors in the namespace.
+
+**Request Body**
+
+Example:
+```
+{
+    "inputs": "embed text #2" 
+}
+```
+
+Parameters:
+
+```
+{
+    "inputs": string
+}
+```
+
+Returns:
+
+```
+{
+    "success": true,
+    "matches": [{
+        "id": "48a4fcee-1b02-4fa0-92c2-22c1213e7434",
+	    "source": "embed text #1",
+	    "metadata": {
+            "userId": 1
+        },
+	    "score": 0.95,
+    }]
+}
+
+```
+
 
 ### `POST /api/namespaces/`
 **Create a namespace (a partition key within an index)**
