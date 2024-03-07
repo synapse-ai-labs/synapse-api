@@ -6,6 +6,9 @@ This is a Cloudflare Worker with OpenAPI 3.1 using [itty-router-openapi](https:/
 This project is a quick start into building OpenAPI compliant Workers that generates the
 `openapi.json` schema automatically from code and validates the incoming request to the defined parameters or request body.
 
+## Key Features
+
+
 ## Get Started
 1. [Sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) for a paid Cloudflare Workers account. You will need to purchase a $5/month plan.
 2. [Sign up](https://platform.openai.com/signup) (or sign in if you already have an account) for OpenAI API access and obtain an API key 
@@ -34,6 +37,10 @@ Both the `metric` and `dimensions` values for an index are fixed, and cannot be 
 ### `POST /api/namespaces/:namespace/insert`
 **Insert one or more embedding vectors**
 
+**Path params**
+
+- `namespace: string`: Name of the namespace in which vectors are being inserted. Automatigcally created if the namespace doesn't already exist.
+
 **Request body**
 
 Example:
@@ -47,6 +54,7 @@ Example:
 }
 ```
 
+Fields:
 ```
 {
     vectors: { 
@@ -78,6 +86,10 @@ Returns:
 Generates an embedding using the model associated with the namespace, 
 and queries the embedding output against the existing vectors in the namespace.
 
+
+**Path parameters**
+- `namespace: string`: Name of the namespace against which vector queries are performed
+
 **Request Body**
 
 Example:
@@ -87,16 +99,14 @@ Example:
 }
 ```
 
-Parameters:
-
+Fields:
 ```
 {
     "inputs": string
 }
 ```
 
-Returns:
-
+**Returns**
 ```
 {
     "success": true,
@@ -116,8 +126,80 @@ Returns:
 ### `POST /api/namespaces/`
 **Create a namespace (a partition key within an index)**
 
+**Request body**
+
+Example:
+```
+{
+    "vectors": [{
+        "text": "embed text #1",
+        "metadata": '{"userId": 1}'
+    }],
+    "model": "text-embedding-3-large" 
+}
+```
+
+Fields:
+```
+{
+    vectors: { 
+        text: string, 
+        metadata: string (JSON-encoded object) [optional],
+        id: string [optional, defaults to a UUID] 
+    }[],
+    model: string
+}
+```
+
+Returns:
+```
+{
+    "vectors": [
+        {
+        "id": "48a4fcee-1b02-4fa0-92c2-22c1213e7434",
+	    "source": "embed text #1",
+	    "metadata": {"userId": 1},
+	    "values": [0.001, -2.034, ..., 0.332],
+	    "model": "text-embedding-3-large"
+        }
+    ] 
+}
+```
+
+
 ### `GET /api/namespaces/`
 **List namespaces**
+
+Query Parameters:
+
+- `offset: number` [optional, defaults to 0]
+- `limit: number` [optional, defaults to 10]
+
+
+id: String,
+	name: new Str({ example: "embeddings"}),
+	description: String,
+	dimensionality: Number,
+	distance: Distance,
+	indexName: String,
+	model: String
+
+Returns:
+```
+{
+    "namespaces": [
+        {
+        "id": "bb21cf54-e42d-4bf1-b188-804c0a883c6c",
+        "name": 
+	    "source": "embed text #1",
+	    "metadata": {"userId": 1},
+	    "values": [0.001, -2.034, ..., 0.332],
+	    "model": "text-embedding-3-large"
+        }
+    ] 
+}
+```
+
 
 ### `GET /api/namespaces/:namespace/`
 **Retrieve a namespace by name**
