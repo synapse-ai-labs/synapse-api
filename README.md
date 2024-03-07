@@ -9,9 +9,9 @@ This project is a quick start into building OpenAPI compliant Workers that gener
 ## Get Started
 1. Sign up for a Cloudflare Workers account
 2. Sign up for OpenAI API access and obtain an API key 
-3. Create a `.dev.vars` file (Git-ignored). Add an env entry for `OPENAI_API_KEY`.
-4. Clone this project and install dependencies using yarn install (maybe) [could be npm install]
-5. Run `wrangler login` to auth with your Cloudflare account in **wrangler**
+3. Clone this project and install dependencies by running `yarn install`
+4. Create a `.dev.vars` file (Git-ignored). Add an env entry for `OPENAI_API_KEY`.
+5. Run `yarn login` to auth with your Cloudflare account in **wrangler**
 6. Run `yarn create-db` to create a D1 database (name defaults to: **synapse**)
 7. Run `yarn create-db-schema` to create the relevant tables for your D1 metadata layer.
 8. Run `yarn create-vectorstore --dimensions=1024 --metric cosine`.
@@ -22,7 +22,7 @@ The max `dimensions` value at the time of writing is **1536** (which appears to 
 
 Both the `metric` and `dimensions` values for an index are fixed, and cannot be changed once the Vectorize index has been created.
 
-9. Run `wrangler deploy` to deploy the API to production, making it accessible remotely. 
+9. Run `yarn wrangler deploy` to deploy the API to production, making it accessible remotely. 
 
 ## Endpoints
 ### `POST /api/namespaces/:namespace/insert`
@@ -68,6 +68,6 @@ If you override the `model` request body param when inserting a vector, the **na
 Access OpenAPI documentation at /docs.
 
 ## Local Development
-1. Run `wrangler dev` to start a local instance of the API.
+1. Run `yarn dev` to start a local instance of the API.
 2. Open `http://localhost:9000/` in your browser to see the Swagger interface where you can try the endpoints.
 3. Changes made in the `src/` folder will automatically trigger the server to reload, you only need to refresh the Swagger interface.
