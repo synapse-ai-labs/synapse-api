@@ -31,7 +31,7 @@ Both the `metric` and `dimensions` values for an index are fixed, and cannot be 
 ### `GET /api/namespaces/`: List namespaces
 ### `GET /api/namespaces/:namespace/`: Retrieve a namespace by name
 ### `DELETE /api/namespaces/:namespace/`: Delete a namespace by name 
-### `GET /api/namespaces/:namespace/vectors`: List vectors associated with a given namespace
+dd### `GET /api/namespaces/:namespace/vectors`: List vectors associated with a given namespace
 
 ### `GET /api/namespaces/:namespace/:vectorId/`: Retrieve a specific vector in a given namespace
 ### `DELETE /api/namespaces/:namespace/:vectorId/`: Delete a vector in a given namespace
@@ -41,7 +41,8 @@ Both the `metric` and `dimensions` values for an index are fixed, and cannot be 
 By default, this project uses OpenAI's `text-embedding-3-large` model to embed the provided text. You may override this either by setting an alternative valid model name env 
 `DEFAULT_OPENAI_EMBEDDING_MODEL` or when inserting an embedding vector.
 
-If you override the `model` request body param when inserting a vector, the **namespace** in which you are intending to insert the veco 
+You can only override the `model` request body param when inserting the very first vector into a namespace. Once a namespace has been created, the embedding model associated with the namespace becomes fixed. The rationale behind this is that the embeddings of particular model cannot be shared with the embeddings of anoher model - (see here)[https://community.openai.com/t/are-embeddings-tied-to-a-particular-model/286394] for more info.
+If you override the `model` request body param when inserting a vector, the **namespace** in which you are intending to insert the vecto
 
 ## Limitations
 
