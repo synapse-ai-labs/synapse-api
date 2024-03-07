@@ -7,7 +7,7 @@ This project is a quick start into building OpenAPI compliant Workers that gener
 `openapi.json` schema automatically from code and validates the incoming request to the defined parameters or request body.
 
 ## Get Started
-1. Sign up for a Cloudflare Workers account
+1. [Sign up](https://dash.cloudflare.com/sign-up/workers-and-pages) for a paid Cloudflare Workers account. You will need to purchase a $5/month plan.
 2. [Sign up](https://platform.openai.com/signup) (or sign in if you already have an account) for OpenAI API access and obtain an API key 
 3. Run the following:
 ```
@@ -30,8 +30,30 @@ Both the `metric` and `dimensions` values for an index are fixed, and cannot be 
 9. Run `yarn wrangler deploy` to deploy the API to production, making it accessible remotely. 
 
 ## Endpoints
+
 ### `POST /api/namespaces/:namespace/insert`
-**Insert an embedding vector**
+**Insert embedding vectors**
+
+**Request body:**
+Example:
+```
+{
+    "vectors": [{
+        "text": "embed text #1",
+        "metadata": '{"userId": 1}'
+    }],
+    "model": "text-embedding-3-large" 
+}
+```
+```{
+    vectors: [{ 
+        text: string, 
+        metadata: string (json-encoded object) [optional],
+        id: string [optional, defaults to a UUID] 
+    }],
+    model: string
+}
+```
 
 
 ### `POST /api/namespaces/:namespace/query` 
