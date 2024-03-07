@@ -16,7 +16,7 @@ This project is a quick start into building OpenAPI compliant Workers that gener
 7. Run `yarn create-db-schema` to create the relevant tables for your D1 metadata layer.
 8. Run `yarn create-vectorstore --dimensions=1024 --metric cosine`.
 
-As shown in the above yarn command, you will need to specify `dimensions` and distance `metric` params. See here for an up-to-date list of allowed values: https://developers.cloudflare.com/vectorize/configuration/create-indexes/#distance-metrics. At the time of writing, the following are supported: `cosine`, `euclidean`, and `dot-product`.
+As shown in the above yarn command, you will need to specify `dimensions` and distance `metric` params. See (here)[https://developers.cloudflare.com/vectorize/configuration/create-indexes/#distance-metrics] for an up-to-date list of allowed values. At the time of writing, the following are supported: `cosine`, `euclidean`, and `dot-product`.
 
 The max `dimensions` value at the time of writing is **1536** (which appears to originate from OpenAI's `ada-002` embedding model output size). See here for more information on why dimensions are relevant: https://developers.cloudflare.com/vectorize/configuration/create-indexes/#dimensions. 
 
@@ -40,8 +40,7 @@ Both the `metric` and `dimensions` values for an index are fixed, and cannot be 
 By default, this project uses OpenAI's `text-embedding-3-large` model to embed the provided text. You may override this either by setting an alternative valid model name env 
 `DEFAULT_OPENAI_EMBEDDING_MODEL` or when inserting an embedding vector.
 
-If you override the `model` request body param when inserting a vector, the **namespace** in which
-you are intending to insert the 
+If you override the `model` request body param when inserting a vector, the **namespace** in which you are intending to insert the veco 
 
 ## Limitations
 
