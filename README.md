@@ -14,17 +14,22 @@ This project is a quick start into building OpenAPI compliant Workers that gener
 2. [Sign up](https://platform.openai.com/signup) (or sign in if you already have an account) for OpenAI API access and obtain an API key 
 3. Run the following:
 ```
-git clone https://github.com/aaronjoyce/ts-embedding-api.git
-cd ts-embedding-api
+git clone https://github.com/aaronjoyce/synapse-api.git
+cd synapse-api
 yarn install
 ```
 4. Create a `.dev.vars` file (Git-ignored). Add an env entry for `OPENAI_API_KEY`, setting the value to the API key generated in step **#2**.
-5. Run `yarn login` to auth with your Cloudflare account in **wrangler**
-6. Run `yarn create-db` to create a D1 database (name defaults to: **synapse**)
+5. Run `yarn login` to auth with your Cloudflare account using **wrangler**
+6. Run `yarn create-db` to create a D1 database (name defaults to: **synapse** - you can override it in the wrangler.toml file)
 7. Run `yarn create-db-schema` to create the relevant tables for your D1 metadata layer.
 8. Run `yarn create-vectorstore --dimensions=1024 --metric cosine`.
 
-As shown in the above yarn command, you will need to specify `dimensions` and distance `metric` params. See [here](https://developers.cloudflare.com/vectorize/configuration/create-indexes/#distance-metrics) for an up-to-date list of allowed values. At the time of writing, the following are supported: `cosine`, `euclidean`, and `dot-product`.
+> [!NOTE]
+> As shown in the above yarn command, you will need to specify `dimensions` and distance `metric` params. See [here](https://developers.cloudflare.com/vectorize/configuration/create-indexes/#distance-metrics) for an up-to-date list of allowed values. At the time of writing, the following are supported: 
+
+> - `cosine`
+> - `euclidean`
+> - `dot-product`.
 
 The max `dimensions` value at the time of writing is **1536** (which appears to originate from OpenAI's `ada-002` embedding model output size). See [here](https://developers.cloudflare.com/vectorize/configuration/create-indexes/#dimensions) for more information on why dimensions are relevant. 
 
