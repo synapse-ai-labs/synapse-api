@@ -79,7 +79,7 @@ Fields:
         "id": "48a4fcee-1b02-4fa0-92c2-22c1213e7434",
 	    "source": "embed text #1",
 	    "metadata": {"userId": 1},
-	    "values": [0.001, -2.034, ..., 0.332],
+	    "values": [0.015899453, 0.010525339, -0.016939605, ..., -0.025731359],
 	    "model": "text-embedding-3-large"
         }
     ] 
@@ -164,7 +164,7 @@ Fields:
         "id": "48a4fcee-1b02-4fa0-92c2-22c1213e7434",
 	    "source": "embed text #1",
 	    "metadata": {"userId": 1},
-	    "values": [0.001, -2.034, ..., 0.332],
+	    "values": [0.015899453, 0.010525339, -0.016939605, ..., -0.025731359],
 	    "model": "text-embedding-3-large"
         }
     ] 
@@ -254,7 +254,7 @@ Fields:
             "id": "48a4fcee-1b02-4fa0-92c2-22c1213e7434",
             "source": "embed text #1",
             "metadata": {"userId": 1},
-            "values": [0.001, -2.034, ..., 0.332],
+            "values": [0.015899453, 0.010525339, -0.016939605, ..., -0.025731359],
             "model": "text-embedding-3-large"
         },
         {
@@ -280,7 +280,7 @@ Fields:
         "id": "48a4fcee-1b02-4fa0-92c2-22c1213e7434",
         "source": "embed text #1",
         "metadata": {"userId": 1},
-        "values": [0.001, -2.034, ..., 0.332],
+        "values": [0.015899453, 0.010525339, -0.016939605, ..., -0.025731359],
         "model": "text-embedding-3-large"
     }
 }
