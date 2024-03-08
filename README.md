@@ -30,10 +30,10 @@ yarn install
 > - `cosine`
 > - `euclidean`
 > - `dot-product`.
-
-The max `dimensions` value at the time of writing is **1536** (which appears to originate from OpenAI's `ada-002` embedding model output size). See [here](https://developers.cloudflare.com/vectorize/configuration/create-indexes/#dimensions) for more information on why dimensions are relevant. 
-
-Both the `metric` and `dimensions` values for an index are fixed, and cannot be changed once the Vectorize index has been created.
+>
+> The max `dimensions` value at the time of writing is **1536** (which appears to originate from OpenAI's `ada-002` embedding model output size). See [here](https://developers.cloudflare.com/vectorize/configuration/create-indexes/#dimensions) for more information on why dimensions are relevant. 
+> 
+> Both the `metric` and `dimensions` values for an index are fixed, and cannot be changed once the Vectorize index has been created.
 
 9. Run `yarn wrangler deploy` to deploy the API to production, making it accessible remotely. 
 
@@ -42,11 +42,11 @@ Both the `metric` and `dimensions` values for an index are fixed, and cannot be 
 ### `POST /api/namespaces/:namespace/insert`
 **Insert one or more embedding vectors**
 
-**Path params**
+**Path Params**
 
 - `namespace: string`: Name of the namespace in which vectors are being inserted. Automatigcally created if the namespace doesn't already exist.
 
-**Request body**
+**Request Body**
 
 Example:
 ```
@@ -71,7 +71,7 @@ Fields:
 }
 ```
 
-Returns:
+**Returns**
 ```
 {
     "vectors": [
@@ -92,7 +92,7 @@ Generates an embedding using the model associated with the namespace,
 and queries the embedding output against the existing vectors in the namespace.
 
 
-**Path params**
+**Path Params**
 - `namespace: string`: Name of the namespace against which vector queries are performed
 
 **Request Body**
@@ -131,7 +131,7 @@ Fields:
 ### `POST /api/namespaces/`
 **Create a namespace (a partition key within an index)**
 
-**Request body**
+**Request Body**
 
 Example:
 ```
