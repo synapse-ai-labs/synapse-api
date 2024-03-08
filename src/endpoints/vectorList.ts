@@ -14,13 +14,13 @@ export class VectorsList extends OpenAPIRoute {
 		tags: ["Vectors"],
 		summary: "List Vectors",
         parameters: {
-			page: Query(Number, {
-				description: "Page number",
-				default: 1,
+			offset: Query(Number, {
+				description: "Offset",
+				default: 0,
 				required: false
 			}),
 			limit: Query(Number, {
-				description: "Number of results to return per page",
+				description: "Number of results to return",
 				required: false,
                 default: 10,
 			}),
@@ -48,9 +48,8 @@ export class VectorsList extends OpenAPIRoute {
 		context: any,
 		data: Record<string, any>
 	) {
-        const { page, limit } = data.query;
-        const offset = (page - 1) * limit;
-
+        const { offset, limit } = data.query;
+		
 		const { namespace } = data.params;
 
 		const d1Client = new D1(env.DB);
