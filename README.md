@@ -26,7 +26,7 @@ yarn install
 
 > [!NOTE]
 > As shown in the above yarn command, you will need to specify `dimensions` and distance `metric` params. See [here](https://developers.cloudflare.com/vectorize/configuration/create-indexes/#distance-metrics) for an up-to-date list of allowed values. At the time of writing, the following are supported: 
-
+>
 > - `cosine`
 > - `euclidean`
 > - `dot-product`.
