@@ -87,7 +87,7 @@ Generates an embedding using the model associated with the namespace,
 and queries the embedding output against the existing vectors in the namespace.
 
 
-**Path parameters**
+**Path params**
 - `namespace: string`: Name of the namespace against which vector queries are performed
 
 **Request Body**
@@ -151,7 +151,7 @@ Fields:
 }
 ```
 
-Returns:
+**Returns**
 ```
 {
     "vectors": [
@@ -170,33 +170,28 @@ Returns:
 ### `GET /api/namespaces/`
 **List namespaces**
 
-Query Parameters:
+**Query Params**:
 
 - `offset: number` [optional, defaults to 0]
 - `limit: number` [optional, defaults to 10]
 
 
-id: String,
-	name: new Str({ example: "embeddings"}),
-	description: String,
-	dimensionality: Number,
-	distance: Distance,
-	indexName: String,
-	model: String
-
-Returns:
+**Returns**
 ```
 {
     "namespaces": [
         {
-        "id": "bb21cf54-e42d-4bf1-b188-804c0a883c6c",
-        "name": 
-	    "source": "embed text #1",
-	    "metadata": {"userId": 1},
-	    "values": [0.001, -2.034, ..., 0.332],
-	    "model": "text-embedding-3-large"
+            "id": "bb21cf54-e42d-4bf1-b188-804c0a883c6c",
+            "name": "customers",
+            "dimensionality": 1024,
+            "distance": "cosine",
+            "indexName": "synapse",
+            "model": "text-embedding-3-large"
+        },
+        {
+            ...
         }
-    ] 
+    ]
 }
 ```
 
@@ -204,17 +199,103 @@ Returns:
 ### `GET /api/namespaces/:namespace/`
 **Retrieve a namespace by name**
 
+**Path Params**
+
+- `namespace: string`: Name of the namespace to be retrieved
+
+**Returns**
+```
+{
+    "namespace": {
+        "id": "bb21cf54-e42d-4bf1-b188-804c0a883c6c",
+        "name": "customers",
+        "dimensionality": 1024,
+        "distance": "cosine",
+        "indexName": "synapse",
+        "model": "text-embedding-3-large"
+    }
+}
+```
+
+
+
 ### `DELETE /api/namespaces/:namespace/`
 **Delete a namespace by name**
 
-### `DELETE /api/namespaces/:namespace/vectors`
+**Path Params**
+
+- `namespace: string`: Name of the namespace to be deleted
+
+**Returns**
+
+```
+{
+    "success": true
+}
+```
+
+### `GET /api/namespaces/:namespace/vectors`
 **List vectors associated with a given namespace**
+
+**Path Params**
+
+- `namespace: string`: Name of the namespace for which to retrieve vectors
+
+**Returns**
+```
+{
+    "vectors": [
+        {
+            "id": "48a4fcee-1b02-4fa0-92c2-22c1213e7434",
+            "source": "embed text #1",
+            "metadata": {"userId": 1},
+            "values": [0.001, -2.034, ..., 0.332],
+            "model": "text-embedding-3-large"
+        },
+        {
+            ...
+        }
+    ] 
+}
+```
+
 
 ### `GET /api/namespaces/:namespace/:vectorId/`
 **Retrieve a specific vector in a given namespace**
 
+**Path Params**
+
+- `namespace: string`: Name of the namespace to be deleted
+- `vectorId: string`: ID of the vector to be deleted
+
+**Returns**
+```
+{
+    "vector": {
+        "id": "48a4fcee-1b02-4fa0-92c2-22c1213e7434",
+        "source": "embed text #1",
+        "metadata": {"userId": 1},
+        "values": [0.001, -2.034, ..., 0.332],
+        "model": "text-embedding-3-large"
+    }
+}
+```
+
 ### `DELETE /api/namespaces/:namespace/:vectorId/`
 **Delete a vector in a given namespace**
+
+**Path Params**
+
+- `namespace: string`: Name of the namespace in which the vector to be deleted belongs
+- `vectorId: string`: ID of the vector to be deleted
+
+**Returns**
+
+```
+{
+    "success": true
+}
+```
 
 
 ## OpenAI
