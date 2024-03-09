@@ -9,7 +9,7 @@ This project is a quick start into building OpenAPI compliant Workers that gener
 ## Key Features
 - Serverless
 - Globally distributed, with data replication across multiple zones, ensuring a high level of availability and resiliency. 
-- API-level validation
+- Simple API endpoints with OpenAPI support and request validation
 
 
 ## Get Started
@@ -32,7 +32,7 @@ yarn install
 > database_id = "40fde3cc-1b73-4bc8-b66b-79ae3f2e2ba8"
 > ```
 
-> [TIP]
+> [!TIP]
 > The binding above enables a Cloudflare Worker to connect to the Cloudflare D1 database. Bindings allow Workers to access other Cloudflare resources, e.g., Vectorize and D1.
 
 
