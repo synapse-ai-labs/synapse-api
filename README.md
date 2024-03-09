@@ -6,7 +6,7 @@ This is a Cloudflare Worker with OpenAPI 3.1 using [itty-router-openapi](https:/
 This project is a quick start into building OpenAPI compliant Workers that generates the
 `openapi.json` schema automatically from code and validates the incoming request to the defined parameters or request body.
 
-## Key Features
+## Key Features
 - Serverless
 - Globally distributed, with data replication across multiple zones, ensuring a high level of availability and resiliency. 
 - API-level validation
@@ -31,6 +31,10 @@ yarn install
 > database_name = "synapse"
 > database_id = "40fde3cc-1b73-4bc8-b66b-79ae3f2e2ba8"
 > ```
+
+> [TIP]
+> The binding above enables a Cloudflare Worker to connect to the Cloudflare D1 database. Bindings allow Workers to access other Cloudflare resources, e.g., Vectorize and D1.
+
 
 7. Run `yarn create-db-schema` to create the relevant tables for your D1 metadata layer.
 8. Run `yarn create-vectorstore --dimensions=1024 --metric cosine`.

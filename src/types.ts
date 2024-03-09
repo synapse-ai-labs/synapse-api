@@ -65,4 +65,5 @@ export const VectorMatch = {
 	source: String,
 	metadata: new Obj({ required: false }),
 	score: Number,
+	values: [Number]
 }
