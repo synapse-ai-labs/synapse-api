@@ -39,7 +39,8 @@ yarn install
 > Copy and paste the output into the `wrangler.toml` file. It should look like the following:
 > ```[[vectorize]]
 > binding = "VECTORIZE_INDEX" # available within your Worker on env.VECTORIZE_INDEX
-> index_name = "synapse21"```
+> index_name = "synapse"
+> ```
 
 > [!IMPORTANT]
 > As shown in the above yarn command, you will need to specify `dimensions` and distance `metric` params. See [here](https://developers.cloudflare.com/vectorize/configuration/create-indexes/#distance-metrics) for an up-to-date list of allowed values. At the time of writing, the following are supported: 
