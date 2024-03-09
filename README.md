@@ -117,6 +117,12 @@ and queries the embedding output against the existing vectors in the namespace.
 **Path Params**
 - `namespace: string`: Name of the namespace against which vector queries are performed
 
+**Query Params**
+- `topK: number`: Returns up to `K` matches [optional, defaults to 10]
+- `returnValues: boolean`: Return matching vector values [optional, defaults to `false`]
+- `returnMetadata: boolean`: Return matching vector metadata [optional, defaults to `false`]
+- `similarityCutoff: number`: Restrict matches to only those with a score exceeding the threshold [optional]
+
 **Request Body**
 
 Example:
