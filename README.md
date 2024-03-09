@@ -23,12 +23,12 @@ yarn install
 ```
 4. Create a `.dev.vars` file (included in the repo's .gitignore file). Add an env entry for `OPENAI_API_KEY`, setting the value to the API key generated in step **#2**.
 5. Run `yarn login` to auth with your Cloudflare account using **wrangler**
-6. Run `yarn create-db` to create a D1 database (name defaults to: **synapse** - you can override it in the wrangler.toml file)
+6. Run `yarn create-db` to create a D1 database (name defaults to **synapse** - you can override it in the wrangler.toml file)
 > [!NOTE]
 > Copy and paste the output into the `wrangler.toml` file. It should look like the following:
 > ```[[d1_databases]]
 > binding = "DB" # i.e. available in your Worker on env.DB
-> database_name = "synapse11"
+> database_name = "synapse"
 > database_id = "40fde3cc-1b73-4bc8-b66b-79ae3f2e2ba8"
 > ```
 
@@ -36,6 +36,12 @@ yarn install
 8. Run `yarn create-vectorstore --dimensions=1024 --metric cosine`.
 
 > [!NOTE]
+> Copy and paste the output into the `wrangler.toml` file. It should look like the following:
+> ```[[vectorize]]
+> binding = "VECTORIZE_INDEX" # available within your Worker on env.VECTORIZE_INDEX
+> index_name = "synapse21"```
+
+> [!IMPORTANT]
 > As shown in the above yarn command, you will need to specify `dimensions` and distance `metric` params. See [here](https://developers.cloudflare.com/vectorize/configuration/create-indexes/#distance-metrics) for an up-to-date list of allowed values. At the time of writing, the following are supported: 
 >
 > - `cosine`
