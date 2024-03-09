@@ -77,7 +77,7 @@ Example:
 }
 ```
 
-Fields:
+Parameters:
 ```
 {
     vectors: { 
@@ -122,7 +122,7 @@ Example:
 }
 ```
 
-Fields:
+Parameters:
 ```
 {
     "inputs": string
@@ -162,7 +162,7 @@ Example:
 }
 ```
 
-Fields:
+Parameters:
 ```
 {
     vectors: { 
