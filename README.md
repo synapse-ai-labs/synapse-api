@@ -22,7 +22,7 @@ cd synapse-api
 yarn install
 ```
 4. Create a `.dev.vars` file (included in the repo's .gitignore file). Add an env entry for `OPENAI_API_KEY`, setting the value to the API key generated in step **#2**.
-5. Run `yarn login` to auth with your Cloudflare account using **wrangler**
+5. Run `yarn wrangler login` to auth with your Cloudflare account using **wrangler**
 6. Run `yarn create-db` to create a D1 database (name defaults to **synapse** - you can override it in the wrangler.toml file)
 > [!NOTE]
 > Copy and paste the output into the `wrangler.toml` file. It should look like the following:
@@ -57,7 +57,7 @@ yarn install
 > 
 > Both the `metric` and `dimensions` values for an index are fixed, and cannot be changed once the Vectorize index has been created.
 
-9. Run `yarn wrangler deploy` to deploy the API to production, making it accessible remotely. 
+9. Run `yarn deploy` to deploy the API to production, making it accessible remotely. 
 
 ## Endpoints
 
