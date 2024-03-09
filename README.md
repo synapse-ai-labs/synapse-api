@@ -7,6 +7,9 @@ This project is a quick start into building OpenAPI compliant Workers that gener
 `openapi.json` schema automatically from code and validates the incoming request to the defined parameters or request body.
 
 ## Key Features
+- Serverless
+- Globally distributed, with data replication across multiple zones, ensuring a high level of availability and resiliency. 
+- API-level validation
 
 
 ## Get Started
@@ -18,9 +21,17 @@ git clone https://github.com/aaronjoyce/synapse-api.git
 cd synapse-api
 yarn install
 ```
-4. Create a `.dev.vars` file (Git-ignored). Add an env entry for `OPENAI_API_KEY`, setting the value to the API key generated in step **#2**.
+4. Create a `.dev.vars` file (included in the repo's .gitignore file). Add an env entry for `OPENAI_API_KEY`, setting the value to the API key generated in step **#2**.
 5. Run `yarn login` to auth with your Cloudflare account using **wrangler**
 6. Run `yarn create-db` to create a D1 database (name defaults to: **synapse** - you can override it in the wrangler.toml file)
+> [!NOTE]
+> Copy and paste the output into the `wrangler.toml` file. It should look like the following:
+> ```[[d1_databases]]
+> binding = "DB" # i.e. available in your Worker on env.DB
+> database_name = "synapse11"
+> database_id = "40fde3cc-1b73-4bc8-b66b-79ae3f2e2ba8"
+> ```
+
 7. Run `yarn create-db-schema` to create the relevant tables for your D1 metadata layer.
 8. Run `yarn create-vectorstore --dimensions=1024 --metric cosine`.
 
