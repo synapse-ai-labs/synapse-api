@@ -339,6 +339,9 @@ You can only override the `model` request body param when inserting the very fir
 If you override the `model` request body param when inserting a vector, the **namespace** in which you are intending to insert the vecto
 
 ## Limitations
+- The project's Vectorize bindings (specified in the `wrangler.toml` file) only support a single vector index
+- Cloudflare's Vectorize offering currently has some significant limitations, including an upper limit of 200,000 vectors per index and 1000 namespaces per index. See [here](https://developers.cloudflare.com/vectorize/platform/limits/) for up-to-date information on its limitations.
+- Cloudflare's D1 offering has a maximum database size of 2 GB. See [here](https://developers.cloudflare.com/d1/platform/limits/) for up-to-date information on its limitations.
 
 
 ## Production
