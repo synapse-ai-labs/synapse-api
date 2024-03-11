@@ -79,8 +79,8 @@ export class VectorCreate extends OpenAPIRoute {
 
 			if (namespaceData.model !== modelParam) {
 				return Response.json({
-					error: `The specified namespace is already bound to the embedding model ${namespaceData.model}. 
-					Remove the "model" param from your request body or change it to "${namespaceData.model}"`
+					error: `The specified namespace is already bound to the embedding model ${namespaceData.model}. ` +  
+					`Remove the 'model' param from your request body or change it to '${namespaceData.model}'`
 				}, { status: StatusCodes.BAD_REQUEST});
 			}
 
@@ -132,7 +132,9 @@ export class VectorCreate extends OpenAPIRoute {
 					return Response.json(
 						{ 
 							error: err.message, 
-							suggestion: `You either need to change the environment variable set for EMBEDDING_DIMENSIONALITY in the wranger.toml file OR drop and recreate the Cloudflare Vectorize Index with the desired dimensionality.`
+							suggestion: `You either need to change the environment variable set for ` + 
+							`EMBEDDING_DIMENSIONALITY in the wranger.toml file OR drop and recreate the ` + 
+							`Cloudflare Vectorize Index with the desired dimensionality.`
 						},
 						{
 							status: StatusCodes.BAD_REQUEST
