@@ -44,7 +44,6 @@ export class D1 {
     }
     
     async listNamespaces(offset: number = 0, limit: number = 10) {
-        console.log({listNsLimit: limit, listNsOffset: offset});
         const { results } = await this.db.prepare(
             LIST_NAMESPACES_SQL
         ).bind(
@@ -73,7 +72,7 @@ export class D1 {
         return results;
     }
 
-    async listEmbeddingsByNamespacePaginated(namespace: string, limit: number = 10, offset: number = 0) {
+    async listEmbeddingsByNamespacePaginated(namespace: string, offset: number = 0, limit: number = 10, ) {
         const { results } = await this.db.prepare(
             LIST_EMBEDDINGS_BY_NAMESPACE_PAGINATED_SQL
         ).bind(

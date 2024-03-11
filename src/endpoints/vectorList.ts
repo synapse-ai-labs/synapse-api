@@ -66,8 +66,8 @@ export class VectorsList extends OpenAPIRoute {
 
 		const results = await d1Client.listEmbeddingsByNamespacePaginated(
 			namespace,
-			limit,
-			offset
+			offset,
+			limit
 		);
 
 		const namespaceData = await d1Client.retrieveNamespace(
