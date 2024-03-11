@@ -20,22 +20,22 @@ export class VectorsList extends OpenAPIRoute {
 			}),
 			offset: Query(Number, {
 				description: "Offset",
-				default: 0,
+				default: '0',
 				required: false
 			}),
 			limit: Query(Number, {
 				description: "Number of results to return",
+				default: '10',
 				required: false,
-                default: 10,
 			}),
 			returnValues: Query(Boolean, {
 				description: "Return vector values",
-				default: false,
+				default: 'false',
 				required: false
 			}),
 			returnMetadata: Query(Boolean, {
 				description: "Return vector metadata",
-				default: false,
+				default: 'false',
 				required: false
 			}) 
 		},

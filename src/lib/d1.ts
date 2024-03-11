@@ -8,7 +8,7 @@ const DELETE_NAMESPACE_BY_NAME_SQL = `DELETE FROM namespaces WHERE name = ?`;
 const INSERT_EMBEDDING_SQL = `INSERT INTO embeddings (source, namespace, vector_id) VALUES (?, ?, ?) ON CONFLICT (vector_id) DO UPDATE SET source = EXCLUDED.source;`;
 const DELETE_EMBEDDINGS_BY_VECTOR_ID_SQL = `DELETE FROM embeddings WHERE namespace = ? AND vector_id = ? RETURNING *;`;
 const RETRIEVE_EMBEDDING_SQL = `SELECT * FROM embeddings WHERE namespace = ? AND vector_id = ? LIMIT 1;`;
-const LIST_EMBEDDINGS_BY_VECTOR_IDS_SQL = `SELECT * FROM embeddings WHERE namespace = ? AND vector_id IN (?)`;
+const LIST_EMBEDDINGS_BY_VECTOR_IDS_SQL = `SELECT * FROM embeddings WHERE namespace = ? AND vector_id IN (SELECT value FROM json_each(?));`;
 
 export interface EmbeddingInsert {
     text: string;
@@ -68,7 +68,7 @@ export class D1 {
             LIST_EMBEDDINGS_BY_VECTOR_IDS_SQL
         ).bind(
             namespace,
-            vectorIds.map(o => `${o}`).join(',')
+            JSON.stringify(vectorIds)
         ).all();
         return results;
     }

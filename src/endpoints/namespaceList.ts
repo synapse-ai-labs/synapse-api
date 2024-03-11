@@ -17,12 +17,12 @@ export class NamespaceList extends OpenAPIRoute {
         parameters: {
 			offset: Query(Number, {
 				description: "Offset",
-				default: 0,
+				default: '0',
 				required: false
 			}),
 			limit: Query(Number, {
 				description: "Number of results to return",
-				default: 10,
+				default: '10',
 				required: false
 			}),
 		},

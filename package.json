@@ -17,7 +17,8 @@
 		"@qdrant/js-client-rest": "^1.7.0",
 		"cloudflare": "^2.9.1",
 		"http-status-codes": "^2.3.0",
-		"openai": "^4.28.4"
+		"openai": "^4.28.4",
+		"zod": "^3.22.4"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20240222.0",

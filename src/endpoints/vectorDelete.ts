@@ -19,6 +19,7 @@ export class VectorDelete extends OpenAPIRoute {
                 description: "Vector ID"
             })
 		},
+		
 		responses: {
 			"200": {
 				description: "Returns a boolean success value",

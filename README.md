@@ -82,7 +82,7 @@ Example:
 }
 ```
 
-Parameters:
+Schema:
 ```
 {
     vectors: { 
@@ -133,7 +133,7 @@ Example:
 }
 ```
 
-Parameters:
+Schema:
 ```
 {
     "inputs": string
@@ -173,7 +173,7 @@ Example:
 }
 ```
 
-Parameters:
+Schema:
 ```
 {
     vectors: { 

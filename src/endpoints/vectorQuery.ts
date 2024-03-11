@@ -28,24 +28,24 @@ export class VectorQuery extends OpenAPIRoute {
 			}),
 			topK: Query(Number, {
 				description: "The maximum number of returned matches",
-				default: 10, 
+				default: '10', 
 				required: false
 			}),
 			returnValues: Query(Boolean, {
 				description: "Return vector values",
-				default: false,
+				default: 'false',
 				required: false
 			}),
 			returnMetadata: Query(Boolean, {
 				description: "Return vector metadata", 
-				default: false,
+				default: 'false',
 				required: false
 			}),
 			// must be null or a numerical value
 			similarityCutoff: Query(Number, {
 				description: "Similarity score cutoff",
+				default: '0.0',
 				required: false,
-				default: null
 			})
 		},
 		responses: {
@@ -70,7 +70,7 @@ export class VectorQuery extends OpenAPIRoute {
 		const { topK, returnValues, returnMetadata, similarityCutoff } = data.query;
         const { namespace } = data.params;
 		const queryBody = data.body;
-
+		
 		if (topK < 1) {
 			return Response.json({
 				error: `topK value must be greater than 0. You provided ${topK}.`
@@ -78,7 +78,6 @@ export class VectorQuery extends OpenAPIRoute {
 		}
 
 		const d1Client = new D1(env.DB);
-
 		const namespaceResult = await d1Client.retrieveNamespace(
 			namespace
 		);
@@ -109,9 +108,10 @@ export class VectorQuery extends OpenAPIRoute {
                 embeddingData[0].embedding,
                 queryOpts
             );
+			const vectorIds = vectorizeQueryResult.matches.map(o => o.id);
 			const results = await d1Client.listEmbeddingsByVectorIds(
 				namespace,
-				vectorizeQueryResult.matches.map(o => o.id),
+				vectorIds,
 			);
 			return {
 				success: true,

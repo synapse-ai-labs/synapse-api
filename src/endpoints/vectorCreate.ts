@@ -58,7 +58,7 @@ export class VectorCreate extends OpenAPIRoute {
 			return {
 				...o,
 				id: o.id ?? uuid(), 
-				metadata: o.metadata ? JSON.parse(o.metadata) : {},
+				metadata: o.metadata ?? {},
 			}
 		});
 		const { namespace } = data.params;

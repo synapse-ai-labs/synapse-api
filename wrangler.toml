@@ -9,7 +9,7 @@ index_name = "synapse"
 [[d1_databases]]
 binding = "DB"
 database_name = "synapse"
-database_id = "8808683a-e6c3-4cf0-a1aa-8bebbf3930e6"
+database_id = "abbdc1d8-fe7d-4ef2-9788-51fd45cb6fb3"
 
 [vars]
 EMBEDDING_DIMENSIONALITY = 1024
