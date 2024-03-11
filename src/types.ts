@@ -28,7 +28,8 @@ export const Namespace = {
 
 export const NamespaceBody = {
 	name: new Str({ example: "customers",  required: true}),
-	model: String
+	model: String,
+	description: new Str({ example: "all customers", required: false, default: ''})
 };
 
 

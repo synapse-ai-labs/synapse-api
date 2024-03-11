@@ -55,7 +55,7 @@ export class NamespaceFetch extends OpenAPIRoute {
 			namespace: {
 				id: namespaceResult.id,
 				name: namespaceResult.name,
-				description: vectorIndexResult.description,
+				description: namespaceResult.description,
 				dimensionality: vectorIndexConfig.dimensions,
 				distance: vectorIndexConfig.metric,
 				indexName: vectorIndexResult.name,

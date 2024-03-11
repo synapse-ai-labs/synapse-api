@@ -1,4 +1,4 @@
-const INSERT_NAMESPACE_SQL = `INSERT INTO namespaces (name, model) VALUES (?, ?) RETURNING *;`;
+const INSERT_NAMESPACE_SQL = `INSERT INTO namespaces (name, model, description) VALUES (?, ?, ?) RETURNING *;`;
 const RETRIEVE_NAMESPACE_SQL = `SELECT * FROM namespaces WHERE name = ?;`
 const LIST_NAMESPACES_SQL = `SELECT * FROM namespaces LIMIT ? OFFSET ?;`;
 const LIST_EMBEDDINGS_BY_NAMESPACE_SQL = `SELECT * FROM embeddings WHERE namespace = ?;`;
@@ -29,7 +29,8 @@ export class D1 {
             INSERT_NAMESPACE_SQL
         ).bind(
             name,
-            model
+            model,
+            description
         ).all()
         return results.length === 1 ? results[0] : null;
     }

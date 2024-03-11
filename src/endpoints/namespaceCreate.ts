@@ -37,6 +37,13 @@ export class NamespaceCreate extends OpenAPIRoute {
 		const namespaceToCreate = data.body; 
 		const d1Client = new D1(env.DB);
 
+		if (namespaceToCreate.name.length > 63) {
+			return Response.json({
+				error: `Namespace name length cannot exceed 63 characters. ` + 
+				`Provided namespace length: ${namespaceToCreate.name.length}`
+			}, { status: StatusCodes.BAD_REQUEST });
+		}
+
 		const existingNamespace = await d1Client.retrieveNamespace(
 			namespaceToCreate.name
 		);
@@ -47,7 +54,8 @@ export class NamespaceCreate extends OpenAPIRoute {
 		} 
 		let createdNamespace = await d1Client.createNamespace(
 			namespaceToCreate.name,
-			namespaceToCreate.model
+			namespaceToCreate.model,
+			namespaceToCreate.description
 		);
         if (!createdNamespace) {
             return Response.json({ 
@@ -63,7 +71,7 @@ export class NamespaceCreate extends OpenAPIRoute {
             namespace: {
                 id: createdNamespace.id,
                 name: createdNamespace.name,
-                description: vectorIndexResult.description,
+                description: createdNamespace.description,
                 dimensionality: vectorIndexConfig.dimensions,
                 distance: vectorIndexConfig.metric,
                 indexName: vectorIndexResult.name,

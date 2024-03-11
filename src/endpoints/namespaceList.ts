@@ -61,7 +61,7 @@ export class NamespaceList extends OpenAPIRoute {
 			namespaces = namespaceResults.map((o, i) => ({
 				id: o.id,
 				name: o.name,
-				description: vectorIndexResult.description,
+				description: o.description,
 				dimensionality: vectorIndexConfig.dimensions,
 				distance: vectorIndexConfig.metric,
 				indexName: vectorIndexResult.name,

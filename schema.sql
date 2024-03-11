@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS namespaces (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL UNIQUE,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    description TEXT,
     model TEXT NOT NULL
 );
 CREATE INDEX namespaces_name_idx ON namespaces (name);
