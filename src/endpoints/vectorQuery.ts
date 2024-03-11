@@ -71,6 +71,12 @@ export class VectorQuery extends OpenAPIRoute {
         const { namespace } = data.params;
 		const queryBody = data.body;
 
+		if (topK < 1) {
+			return Response.json({
+				error: `topK value must be greater than 0. You provided ${topK}.`
+			}, { status: StatusCodes.BAD_REQUEST });
+		}
+
 		const d1Client = new D1(env.DB);
 
 		const namespaceResult = await d1Client.retrieveNamespace(
