@@ -24,7 +24,7 @@ export class D1 {
         this.db = db;
     }
 
-    async createNamespace(name: string, model: string, description?: string) {
+    async createNamespace(name: string, model: string, description: string = "") {
         const { results } = await this.db.prepare(
             INSERT_NAMESPACE_SQL
         ).bind(
