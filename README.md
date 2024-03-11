@@ -10,6 +10,7 @@ This project is a quick start into building OpenAPI compliant Workers that gener
 - Serverless
 - Globally distributed, with data replication across multiple zones, ensuring a high level of availability and resiliency. 
 - Simple API endpoints with OpenAPI support and request validation
+- Embedding model consistency across namespaces - by utilizing Cloudflare D1 as **namespace metadata layer**, the API ensures that all vectors in a given namespace are automagically embedded using the same model.
 
 
 ## Get Started

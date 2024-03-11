@@ -61,13 +61,13 @@ export class VectorCreate extends OpenAPIRoute {
         const openai = new OpenAI({
             apiKey: env.OPENAI_API_KEY
         });
-		const model = vectorsToCreate.model ?? env.DEFAULT_OPENAI_EMBEDDING_MODEL;
+		const modelParam = vectorsToCreate.model ?? env.DEFAULT_OPENAI_EMBEDDING_MODEL;
 		try {
 			let namespaceData = await d1Client.retrieveNamespace(
 				namespace
 			);
 			if (!namespaceData) {
-				namespaceData = await d1Client.createNamespace(namespace, model);
+				namespaceData = await d1Client.createNamespace(namespace, modelParam);
 			}
 			if (!namespaceData) {
 				return Response.json({ 
@@ -75,6 +75,13 @@ export class VectorCreate extends OpenAPIRoute {
 				}, {
 					status: StatusCodes.BAD_REQUEST
 				});
+			}
+
+			if (namespaceData.model !== modelParam) {
+				return Response.json({
+					error: `The specified namespace is already bound to the embedding model ${namespaceData.model}. 
+					Remove the "model" param from your request body or change it to "${namespaceData.model}"`
+				}, { status: StatusCodes.BAD_REQUEST});
 			}
 
 			const { data: embeddingData } = await openai.embeddings.create(
@@ -114,9 +121,8 @@ export class VectorCreate extends OpenAPIRoute {
 				})),
 			};
 		} catch (err) {
-			console.log({errorOccurred: err});
 			if (err instanceof OpenAINotFoundError) {
-				return Response.json({ error: `OpenAI model '${model}' not found` }, { status: StatusCodes.BAD_REQUEST });
+				return Response.json({ error: `OpenAI model '${modelParam}' not found` }, { status: StatusCodes.BAD_REQUEST });
 			}
 			const vectorInsertRegex = /^VECTOR_INSERT_ERROR \(code = (\d+)\)/;
 			const vectorInsertMatches = err.message.match(vectorInsertRegex);
