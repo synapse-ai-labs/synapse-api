@@ -43,7 +43,8 @@ export class D1 {
         return results.length === 1 ? results[0] : null;
     }
     
-    async listNamespaces(limit: number, offset: number) {
+    async listNamespaces(offset: number = 0, limit: number = 10) {
+        console.log({listNsLimit: limit, listNsOffset: offset});
         const { results } = await this.db.prepare(
             LIST_NAMESPACES_SQL
         ).bind(
