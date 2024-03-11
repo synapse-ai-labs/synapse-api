@@ -47,6 +47,13 @@ export class VectorCreate extends OpenAPIRoute {
 		data: Record<string, any>
 	) {
 		const vectorsToCreate = data.body;
+		if (vectorsToCreate.vectors.length > 1000) {
+			return Response.json({
+				error: `Maximum allowed vectors for insertion per request is 1000. ` + 
+				`You provided ${vectorsToCreate.vectors.length} for insertion.`
+			}, { status: StatusCodes.BAD_REQUEST });
+		}
+		
 		const parsedData = vectorsToCreate.vectors.map(o => {
 			return {
 				...o,
