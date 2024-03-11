@@ -113,7 +113,6 @@ export class VectorQuery extends OpenAPIRoute {
 				namespace,
 				vectorizeQueryResult.matches.map(o => o.id),
 			);
-			console.log({embeddingVectorsByIds: results});
 			return {
 				success: true,
 				matches: vectorizeQueryResult.matches.map((o, i) => ({
