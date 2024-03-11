@@ -8,9 +8,9 @@ This project is a quick start into building OpenAPI compliant Workers that gener
 
 ## Key Features
 - Serverless
-- Globally distributed, with data replication across multiple zones, ensuring a high level of availability and resiliency. 
+- Globally distributed, with data replication across multiple zones, ensuring a high level of availability and resiliency
 - Simple API endpoints with OpenAPI support and request validation
-- Embedding model consistency across namespaces - by utilizing Cloudflare D1 as **namespace metadata layer**, the API ensures that all vectors in a given namespace are automagically embedded using the same model.
+- Embedding model consistency across namespaces - by utilizing Cloudflare D1 as **namespace metadata layer**, the API ensures that all vectors in a given namespace are automagically embedded using the same model
 
 
 ## Get Started
@@ -26,7 +26,7 @@ yarn install
 5. Run `yarn wrangler login` to auth with your Cloudflare account using **wrangler**
 6. Run `yarn create-db` to create a D1 database (name defaults to **synapse** - you can override it in the wrangler.toml file)
 > [!NOTE]
-> Copy and paste the output into the `wrangler.toml` file. It should look like the following:
+> Copy and paste the output into the `wrangler.toml` file. **You will need to replace the existing sample bindings.** It should look like the following:
 > ```[[d1_databases]]
 > binding = "DB" # i.e. available in your Worker on env.DB
 > database_name = "synapse"
@@ -41,7 +41,7 @@ yarn install
 8. Run `yarn create-vectorstore --dimensions=1024 --metric cosine`.
 
 > [!NOTE]
-> Copy and paste the output into the `wrangler.toml` file. It should look like the following:
+> Copy and paste the output into the `wrangler.toml` file. **You will need to replace the existing sample bindings.** It should look like the following:
 > ```[[vectorize]]
 > binding = "VECTORIZE_INDEX" # available within your Worker on env.VECTORIZE_INDEX
 > index_name = "synapse"
