@@ -10,6 +10,7 @@ This project is a quick start into building OpenAPI compliant Workers that gener
 - Serverless
 - Globally distributed, with data replication across multiple zones, ensuring a high level of availability and resiliency
 - Simple API endpoints with OpenAPI support and request validation
+- Batch vector embedding and insertion
 - Embedding model consistency across namespaces - by utilizing Cloudflare D1 as **namespace metadata layer**, the API ensures that all vectors in a given namespace are automagically embedded using the same model
 
 
@@ -60,7 +61,7 @@ yarn install
 
 9. Run `yarn deploy` to deploy the API to production, making it accessible remotely. 
 
-## Endpoints
+## API Endpoints
 
 ### `POST /api/namespaces/:namespace/insert`
 **Insert one or more embedding vectors**
@@ -331,6 +332,22 @@ Schema:
 }
 ```
 
+
+## Examples
+### Insert vectors
+```curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/insert' \
+--header 'Content-Type: application/json' \
+--data '{
+  "vectors": [
+    {
+      "text": "embedded text example",
+      "metadata": {
+        "userId": "1"
+      }
+    }
+  ],
+  "model": "text-embedding-3-large"
+}'```
 
 ## OpenAI
 By default, this project uses OpenAI's `text-embedding-3-large` model to embed the provided text. You may override this either by setting an alternative valid model name env 

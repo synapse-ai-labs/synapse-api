@@ -1,11 +1,13 @@
-import { DateTime, Str } from "@cloudflare/itty-router-openapi";
+import { Str, Enumeration } from "@cloudflare/itty-router-openapi";
+import { OPENAI_EMBEDDING_MODELS, OPENAI_EMBEDDING_MODEL_LARGE } from "./constants";
 import {z} from 'zod';
 
-
-const EXAMPLE_EMBEDDING_MODEL = "text-embedding-3-large";
-
 export const Metadata = z.record(z.string(), z.any(), { description: 'Custom vector metadata'}).optional();
-export const Model = new Str({ required: false, example: EXAMPLE_EMBEDDING_MODEL });
+export const Model = new Enumeration({ 
+	required: false, 
+	values: OPENAI_EMBEDDING_MODELS, 
+	default: OPENAI_EMBEDDING_MODEL_LARGE 
+});
 
 
 export enum Distance {
