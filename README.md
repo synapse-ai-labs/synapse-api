@@ -376,8 +376,7 @@ curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/quer
 }'
 ```
 
-### List namespace vectors
-
+### List namespace vectors
 ```
 curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/vectors?returnMetadata=true'
 ```
@@ -394,6 +393,7 @@ curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces' \
 ```
 
 ### List namespaces
+
 ```
 curl --location 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces'
 ```
