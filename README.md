@@ -377,6 +377,7 @@ curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/quer
 ```
 
 ### List namespace vectors
+
 ```
 curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/vectors?returnMetadata=true'
 ```
