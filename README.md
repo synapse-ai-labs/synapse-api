@@ -53,6 +53,7 @@ yarn install
 > Both the `metric` and `dimensions` values for an index are fixed, and cannot be changed once the Vectorize index has been created.
 
 9. Run `yarn deploy` to deploy the API to production, making it accessible remotely. 
+10. Navigate to `https://silent-king-5fdc.joyceaa.workers.dev/docs` (replace this example URL with the Workers endpoint generated for you as part of your deploy) to view your API's OpenAPI docs. 
 
 
 ## Getting Started Examples
