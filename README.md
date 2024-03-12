@@ -54,6 +54,66 @@ yarn install
 
 9. Run `yarn deploy` to deploy the API to production, making it accessible remotely. 
 
+
+## Getting Started Examples
+### Insert vectors
+```
+curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/insert' \
+--header 'Content-Type: application/json' \
+--data '{
+  "vectors": [
+    {
+      "text": "embedded text example",
+      "metadata": {
+        "userId": "1"
+      }
+    }
+  ],
+  "model": "text-embedding-3-large"
+}'
+```
+
+### Query vectors
+```
+curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/query' \
+--header 'Content-Type: application/json' \
+--data '{
+  "inputs": "embedded text query" 
+}'
+```
+
+### Query vectors
+```
+curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/query' \
+--header 'Content-Type: application/json' \
+--data '{
+  "inputs": "embedded text query" 
+}'
+```
+
+### List namespace vectors
+```
+curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/vectors?returnMetadata=true'
+```
+
+### Create a namespace
+```
+curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces' \
+--header 'Content-Type: text/plain' \
+--data '{
+  "name": "users",
+  "model": "text-embedding-3-large",
+  "description": "all users"
+}'
+```
+
+### List namespaces
+
+```
+curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces'
+```
+
+
 ## API Endpoints
 
 ### `POST /api/namespaces/:namespace/insert`
@@ -332,64 +392,6 @@ Schema:
 }
 ```
 
-
-## Examples
-### Insert vectors
-```
-curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/insert' \
---header 'Content-Type: application/json' \
---data '{
-  "vectors": [
-    {
-      "text": "embedded text example",
-      "metadata": {
-        "userId": "1"
-      }
-    }
-  ],
-  "model": "text-embedding-3-large"
-}'
-```
-
-### Query vectors
-```
-curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/query' \
---header 'Content-Type: application/json' \
---data '{
-  "inputs": "embedded text query" 
-}'
-```
-
-### Query vectors
-```
-curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/query' \
---header 'Content-Type: application/json' \
---data '{
-  "inputs": "embedded text query" 
-}'
-```
-
-### List namespace vectors
-```
-curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/vectors?returnMetadata=true'
-```
-
-### Create a namespace
-```
-curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces' \
---header 'Content-Type: text/plain' \
---data '{
-  "name": "users",
-  "model": "text-embedding-3-large",
-  "description": "all users"
-}'
-```
-
-### List namespaces
-
-```
-curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces'
-```
 
 ## OpenAI
 By default, this project uses OpenAI's `text-embedding-3-large` model to embed the provided text. You may override this either by setting an alternative valid model name env 
