@@ -19,7 +19,7 @@ This project is a quick start into building OpenAPI compliant Workers that gener
 2. [Sign up](https://platform.openai.com/signup) (or sign in if you already have an account) for OpenAI API access and obtain an API key 
 3. Run the following:
 ```
-git clone https://github.com/aaronjoyce/synapse-api.git
+git clone https://github.com/synapse-ai-labs/synapse-api.git
 cd synapse-api
 yarn install
 ```
