@@ -6,7 +6,7 @@
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
 		"start": "wrangler dev",
-		"create-db": "wrangler d1 create synapse",
+		"create-db": "( echo \"\n\"; yarn wrangler d1 create synapse | awk '/^\\[\\[d1_databases\\]\\]/, /database_id/'; echo \"\n\"; ) >> wrangler.toml",
 		"create-vectorstore": "wrangler vectorize create synapse",
 		"create-db-schema": "wrangler d1 execute synapse --file=./schema.sql"
 	},

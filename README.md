@@ -27,7 +27,7 @@ yarn install
 5. Run `yarn wrangler login` to auth with your Cloudflare account using **wrangler**
 6. Run `yarn create-db` to create a D1 database (name defaults to **synapse** - you can override it in the wrangler.toml file)
 > [!NOTE]
-> Copy and paste the output into the `wrangler.toml` file. **You will need to replace the existing sample bindings.** It should look like the following:
+> This will append to the project's `wrangler.toml` file. It will look something like the following:
 > ```[[d1_databases]]
 > binding = "DB" # i.e. available in your Worker on env.DB
 > database_name = "synapse"
@@ -40,13 +40,6 @@ yarn install
 
 7. Run `yarn create-db-schema` to create the relevant tables for your D1 metadata layer.
 8. Run `yarn create-vectorstore --dimensions=1024 --metric cosine`.
-
-> [!NOTE]
-> Copy and paste the output into the `wrangler.toml` file. **You will need to replace the existing sample bindings.** It should look like the following:
-> ```[[vectorize]]
-> binding = "VECTORIZE_INDEX" # available within your Worker on env.VECTORIZE_INDEX
-> index_name = "synapse"
-> ```
 
 > [!IMPORTANT]
 > As shown in the above yarn command, you will need to specify `dimensions` and distance `metric` params. See [here](https://developers.cloudflare.com/vectorize/configuration/create-indexes/#distance-metrics) for an up-to-date list of allowed values. At the time of writing, the following are supported: 
