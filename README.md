@@ -53,7 +53,7 @@ yarn install
 > Both the `metric` and `dimensions` values for an index are fixed, and cannot be changed once the Vectorize index has been created.
 
 9. Run `yarn deploy` to deploy the API to production, making it accessible remotely. 
-10. Navigate to `https://synapse-api.yourusername.workers.dev/docs` (**replace username `yourusername` with your Cloudflare workers username**) to view your deployment's OpenAPI docs. 
+10. Navigate to `https://synapse-api.yourusername.workers.dev/docs` (**replace `yourusername` with your Cloudflare workers username**) to view your deployment's OpenAPI docs. 
 
 
 ## Getting Started Examples
