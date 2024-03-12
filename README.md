@@ -395,7 +395,7 @@ curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces' \
 ### List namespaces
 
 ```
-curl --location 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces'
+curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces'
 ```
 
 ## OpenAI
