@@ -335,7 +335,8 @@ Schema:
 
 ## Examples
 ### Insert vectors
-```curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/insert' \
+```
+curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/insert' \
 --header 'Content-Type: application/json' \
 --data '{
   "vectors": [
@@ -347,7 +348,8 @@ Schema:
     }
   ],
   "model": "text-embedding-3-large"
-}'```
+}'
+```
 
 ## OpenAI
 By default, this project uses OpenAI's `text-embedding-3-large` model to embed the provided text. You may override this either by setting an alternative valid model name env 
