@@ -276,6 +276,13 @@ Schema:
 
 - `namespace: string`: Name of the namespace for which to retrieve vectors
 
+**Query Params**
+
+- `offset: number`  [optional, defaults to 0]
+- `limit: number`  [optional, defaults to 10]
+- `returnValues: boolean` [optional, defaults to `false`]
+- `returnMetadata: boolean` [optional, defaults to `false`]
+
 **Returns**
 ```
 {
@@ -349,6 +356,45 @@ curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/inse
   ],
   "model": "text-embedding-3-large"
 }'
+```
+
+### Query vectors
+```
+curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/query' \
+--header 'Content-Type: application/json' \
+--data '{
+  "inputs": "embedded text query" 
+}'
+```
+
+### Query vectors
+```
+curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/query' \
+--header 'Content-Type: application/json' \
+--data '{
+  "inputs": "embedded text query" 
+}'
+```
+
+### List namespace vectors
+```
+curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/vectors?returnMetadata=true'
+```
+
+### Create a namespace
+```
+curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces' \
+--header 'Content-Type: text/plain' \
+--data '{
+  "name": "users",
+  "model": "text-embedding-3-large",
+  "description": "all users"
+}'
+```
+
+### List namespaces
+```
+curl --location 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces'
 ```
 
 ## OpenAI
