@@ -1,4 +1,4 @@
-name = "silent-king-5fdc"
+name = "synapse-api"
 main = "src/index.ts"
 compatibility_date = "2024-03-04"
 

@@ -53,13 +53,13 @@ yarn install
 > Both the `metric` and `dimensions` values for an index are fixed, and cannot be changed once the Vectorize index has been created.
 
 9. Run `yarn deploy` to deploy the API to production, making it accessible remotely. 
-10. Navigate to `https://silent-king-5fdc.joyceaa.workers.dev/docs` (replace this example URL with the Workers endpoint generated for you as part of your deploy) to view your API's OpenAPI docs. 
+10. Navigate to `https://synapse-api.yourusername.workers.dev/docs` (**replace username `yourusername` with your Cloudflare workers username**) to view your deployment's OpenAPI docs. 
 
 
 ## Getting Started Examples
 ### Insert vectors
 ```
-curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/insert' \
+curl 'https://synapse-api.yourusername.workers.dev/api/namespaces/customers/insert' \
 --header 'Content-Type: application/json' \
 --data '{
   "vectors": [
@@ -76,7 +76,7 @@ curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/inse
 
 ### Query vectors
 ```
-curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/query' \
+curl 'https://synapse-api.yourusername.workers.dev/api/namespaces/customers/query' \
 --header 'Content-Type: application/json' \
 --data '{
   "inputs": "embedded text query" 
@@ -85,7 +85,7 @@ curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/quer
 
 ### Query vectors
 ```
-curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/query' \
+curl 'https://synapse-api.yourusername.workers.dev/api/namespaces/customers/query' \
 --header 'Content-Type: application/json' \
 --data '{
   "inputs": "embedded text query" 
@@ -94,12 +94,12 @@ curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/quer
 
 ### List namespace vectors
 ```
-curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces/customers/vectors?returnMetadata=true'
+curl 'https://synapse-api.yourusername.workers.dev/api/namespaces/customers/vectors?returnMetadata=true'
 ```
 
 ### Create a namespace
 ```
-curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces' \
+curl 'https://synapse-api.yourusername.workers.dev/api/namespaces' \
 --header 'Content-Type: text/plain' \
 --data '{
   "name": "users",
@@ -111,7 +111,7 @@ curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces' \
 ### List namespaces
 
 ```
-curl 'https://silent-king-5fdc.joyceaa.workers.dev/api/namespaces'
+curl 'https://synapse-api.yourusername.workers.dev/api/namespaces'
 ```
 
 
